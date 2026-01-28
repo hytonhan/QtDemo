@@ -1,0 +1,26 @@
+<RCC>
+    <qresource prefix="/sql">
+        <file>sql/schema.sql</file>
+        <file>sql/initial_data.sql</file>
+        <file>sql/insert_program.sql</file>
+        <file>sql/fetch_programs.sql</file>
+        <file>sql/delete_program.sql</file>
+        <file>sql/insert_teacher.sql</file>
+        <file>sql/fetch_teachers.sql</file>
+        <file>sql/delete_teacher.sql</file>
+        <file>sql/delete_program_teacher.sql</file>
+        <file>sql/delete_student.sql</file>
+        <file>sql/fetch_students.sql</file>
+        <file>sql/insert_student.sql</file>
+        <file>sql/unlink_programstudent.sql</file>
+        <file>sql/link_programstudent.sql</file>
+        <file>sql/fetch_studentsnotinprogram.sql</file>
+        <file>sql/fetch_programstudents.sql</file>
+        <file>sql/fetch_studentprograms.sql</file>
+        <file>sql/fetch_programteachers.sql</file>
+        <file>sql/fetch_teacherprograms.sql</file>
+        <file>sql/fetch_teachersnotinprogram.sql</file>
+        <file>sql/link_programteacher.sql</file>
+        <file>sql/unlink_programteacher.sql</file>
+    </qresource>
+</RCC>
