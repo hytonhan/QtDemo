@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AddTeacherDialog</class>
+ <widget class="QDialog" name="AddTeacherDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="titleLabel">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Lisää opettaja</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="etunimiLineEdit"/>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="etunimiLabel">
+       <property name="text">
+        <string>Etunimi</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="sukunimiLineEdit"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="sukunimiLabel">
+       <property name="text">
+        <string>Sukunimi</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="osoiteLabel">
+       <property name="text">
+        <string>Osoite</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="osoiteLineEdit"/>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="puhelinLabel">
+       <property name="text">
+        <string>Puhelin</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="puhelinLineEdit"/>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="alaLabel">
+       <property name="text">
+        <string>Ala</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLineEdit" name="alaLineEdit"/>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="palkkaLabel">
+       <property name="text">
+        <string>Palkka</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QLineEdit" name="palkkaLineEdit"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="addButton">
+       <property name="text">
+        <string>Lisää</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="cancelButton">
+       <property name="text">
+        <string>Peruuta</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>cancelButton</sender>
+   <signal>clicked()</signal>
+   <receiver>AddTeacherDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>266</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>319</x>
+     <y>4</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addButton</sender>
+   <signal>clicked()</signal>
+   <receiver>AddTeacherDialog</receiver>
+   <slot>onAddClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>126</x>
+     <y>266</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>115</x>
+     <y>4</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onAddClicked()</slot>
+ </slots>
+</ui>

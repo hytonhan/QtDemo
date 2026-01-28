@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AddItemToProgramDialog</class>
+ <widget class="QDialog" name="AddItemToProgramDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>650</width>
+    <height>354</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="titleLabel">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Lisää jotakin koulutusohjelmaan</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="1" column="0">
+      <widget class="QListView" name="lisattavatListView">
+       <property name="acceptDrops">
+        <bool>true</bool>
+       </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+       </property>
+       <property name="dragEnabled">
+        <bool>true</bool>
+       </property>
+       <property name="dragDropMode">
+        <enum>QAbstractItemView::DragDropMode::DragDrop</enum>
+       </property>
+       <property name="defaultDropAction">
+        <enum>Qt::DropAction::MoveAction</enum>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::SelectionMode::ExtendedSelection</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="lisattavatLabel">
+       <property name="text">
+        <string>Opettajat</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QListView" name="lisatytListView">
+       <property name="acceptDrops">
+        <bool>true</bool>
+       </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+       </property>
+       <property name="dragEnabled">
+        <bool>true</bool>
+       </property>
+       <property name="dragDropMode">
+        <enum>QAbstractItemView::DragDropMode::DragDrop</enum>
+       </property>
+       <property name="defaultDropAction">
+        <enum>Qt::DropAction::MoveAction</enum>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::SelectionMode::ExtendedSelection</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QLabel" name="lisatytLabel">
+       <property name="text">
+        <string>Koulutusohjelman opettajat</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QPushButton" name="lisaaButton">
+         <property name="text">
+          <string>Lisää</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="poistaButton">
+         <property name="text">
+          <string>Poista</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QPushButton" name="cancelButton">
+       <property name="text">
+        <string>Hyväksy</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="addButton">
+       <property name="text">
+        <string>Peruuta</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>addButton</sender>
+   <signal>clicked()</signal>
+   <receiver>AddItemToProgramDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>609</x>
+     <y>343</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>365</x>
+     <y>5</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cancelButton</sender>
+   <signal>clicked()</signal>
+   <receiver>AddItemToProgramDialog</receiver>
+   <slot>onAddButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>155</x>
+     <y>334</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>32</x>
+     <y>4</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lisaaButton</sender>
+   <signal>clicked()</signal>
+   <receiver>AddItemToProgramDialog</receiver>
+   <slot>onAddClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>322</x>
+     <y>136</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>329</x>
+     <y>91</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>poistaButton</sender>
+   <signal>clicked()</signal>
+   <receiver>AddItemToProgramDialog</receiver>
+   <slot>onRemoveClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>321</x>
+     <y>238</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>332</x>
+     <y>267</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onAddButtonClicked()</slot>
+  <slot>onAddClicked()</slot>
+  <slot>onRemoveClicked()</slot>
+ </slots>
+</ui>
