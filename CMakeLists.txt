@@ -14,79 +14,82 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 
 set(PROJECT_SOURCES
-        main.cpp
-        ui/mainwindow.cpp
-        ui/mainwindow.h
-        ui/mainwindow.ui
+        src/main.cpp
+        src/ui/mainwindow.cpp
+        src/ui/mainwindow.h
+        src/ui/mainwindow.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(KouluHarkkaTyoQt
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        ui/itemdetailsdialog.h ui/itemdetailsdialog.cpp ui/itemdetailsdialog.ui
-        domain/school.cpp domain/school.h
-        domain/person.cpp domain/person.h
-        domain/school.cpp domain/school.h
-        domain/program.cpp domain/program.h
-        domain/teacher.cpp domain/teacher.h
-        domain/student.cpp domain/student.h
-        domain/worker.cpp domain/worker.h
-        model/programlistmodel.cpp model/programlistmodel.h
-        model/programteacherlistmodel.h model/programteacherlistmodel.cpp
-        model/programstudentlistmodel.h model/programstudentlistmodel.cpp
-        ui/confirmremovedialog.h ui/confirmremovedialog.cpp ui/confirmremovedialog.ui
-        ui/addprogramdialog.h ui/addprogramdialog.cpp ui/addprogramdialog.ui
-        infra/databaseservice.h infra/databaseservice.cpp
-        sql/schema.sql
-        resources.qrc
-        sql/initial_data.sql
+        src/ui/itemdetailsdialog.h src/ui/itemdetailsdialog.cpp src/ui/itemdetailsdialog.ui
+        src/domain/school.cpp src/domain/school.h
+        src/domain/person.cpp src/domain/person.h
+        src/domain/school.cpp src/domain/school.h
+        src/domain/program.cpp src/domain/program.h
+        src/domain/teacher.cpp src/domain/teacher.h
+        src/domain/student.cpp src/domain/student.h
+        src/domain/worker.cpp src/domain/worker.h
+        src/model/programlistmodel.cpp src/model/programlistmodel.h
+        src/model/programteacherlistmodel.h src/model/programteacherlistmodel.cpp
+        src/model/programstudentlistmodel.h src/model/programstudentlistmodel.cpp
+        src/ui/confirmremovedialog.h src/ui/confirmremovedialog.cpp src/ui/confirmremovedialog.ui
+        src/ui/addprogramdialog.h src/ui/addprogramdialog.cpp src/ui/addprogramdialog.ui
+        src/infra/databaseservice.h src/infra/databaseservice.cpp
+        src/sql/schema.sql
+        src/resources.qrc
+        src/sql/initial_data.sql
 
-        sql/insert_program.sql
-        sql/fetch_programs.sql
-        sql/delete_program.sql
-        sql/insert_teacher.sql
-        model/teacherlistmodel.h model/teacherlistmodel.cpp
-        sql/fetch_teachers.sql
-        ui/addteacherdialog.h ui/addteacherdialog.cpp ui/addteacherdialog.ui
-        sql/delete_teacher.sql
-        sql/delete_program_teacher.sql
-        ui/additemtoprogramdialog.h ui/additemtoprogramdialog.cpp ui/additemtoprogramdialog.ui
+        src/sql/insert_program.sql
+        src/sql/fetch_programs.sql
+        src/sql/delete_program.sql
+        src/sql/insert_teacher.sql
+        src/model/teacherlistmodel.h src/model/teacherlistmodel.cpp
+        src/sql/fetch_teachers.sql
+        src/ui/addteacherdialog.h src/ui/addteacherdialog.cpp src/ui/addteacherdialog.ui
+        src/sql/delete_teacher.sql
+        src/sql/delete_program_teacher.sql
+        src/ui/additemtoprogramdialog.h src/ui/additemtoprogramdialog.cpp src/ui/additemtoprogramdialog.ui
 
-        sql/insert_student.sql
-        sql/delete_student.sql
-        sql/fetch_students.sql
-        model/programassociationitemlistmodel.h model/programassociationitemlistmodel.cpp
+        src/sql/insert_student.sql
+        src/sql/delete_student.sql
+        src/sql/fetch_students.sql
+        src/model/programassociationitemlistmodel.h src/model/programassociationitemlistmodel.cpp
 
-        model/teacherprogramlistmodel.h model/teacherprogramlistmodel.cpp
-        services/programassociationservice.h services/programassociationservice.cpp
-        services/programteacherassociationservice.h services/programteacherassociationservice.cpp
-        services/programstudentassociationservice.h services/programstudentassociationservice.cpp
-
-
+        src/model/teacherprogramlistmodel.h src/model/teacherprogramlistmodel.cpp
+        src/services/programassociationservice.h src/services/programassociationservice.cpp
+        src/services/programteacherassociationservice.h src/services/programteacherassociationservice.cpp
+        src/services/programstudentassociationservice.h src/services/programstudentassociationservice.cpp
 
 
 
 
-        infra/repositories/programrepository.cpp infra/repositories/programrepository.h
-        infra/repositories/programstudentrepository.cpp infra/repositories/programstudentrepository.h
-        infra/repositories/programteacherrepository.cpp infra/repositories/programteacherrepository.h
-        infra/repositories/schoolrepository.cpp infra/repositories/schoolrepository.h
-        infra/repositories/studentrepository.cpp infra/repositories/studentrepository.h
-        infra/repositories/teacherrepository.cpp infra/repositories/teacherrepository.h
-        infra/databaseservice.cpp infra/databaseservice.h
-        services/programservice.h services/programservice.cpp
-        services/teacherservice.h services/teacherservice.cpp
-        sql/fetch_programstudents.sql
-        sql/fetch_studentsnotinprogram.sql
-        sql/fetch_studentprograms.sql
-        sql/link_programstudent.sql
-        sql/unlink_programstudent.sql
-        sql/fetch_programteachers.sql
-        sql/fetch_teachersnotinprogram.sql
-        sql/fetch_teacherprograms.sql
-        sql/link_programteacher.sql
-        sql/unlink_programteacher.sql
+
+
+        src/infra/repositories/programrepository.cpp src/infra/repositories/programrepository.h
+        src/infra/repositories/programstudentrepository.cpp src/infra/repositories/programstudentrepository.h
+        src/infra/repositories/programteacherrepository.cpp src/infra/repositories/programteacherrepository.h
+        src/infra/repositories/schoolrepository.cpp src/infra/repositories/schoolrepository.h
+        src/infra/repositories/studentrepository.cpp src/infra/repositories/studentrepository.h
+        src/infra/repositories/teacherrepository.cpp src/infra/repositories/teacherrepository.h
+        src/infra/databaseservice.cpp src/infra/databaseservice.h
+        src/services/programservice.h src/services/programservice.cpp
+        src/services/teacherservice.h src/services/teacherservice.cpp
+        src/sql/fetch_programstudents.sql
+        src/sql/fetch_studentsnotinprogram.sql
+        src/sql/fetch_studentprograms.sql
+        src/sql/link_programstudent.sql
+        src/sql/unlink_programstudent.sql
+        src/sql/fetch_programteachers.sql
+        src/sql/fetch_teachersnotinprogram.sql
+        src/sql/fetch_teacherprograms.sql
+        src/sql/link_programteacher.sql
+        src/sql/unlink_programteacher.sql
+
+
+
 
 
     )
