@@ -126,5 +126,5 @@ cmake --build .
 ```
 Run the application:
 ```
-./KouluHarkkaTyoQt
+./QtDemo
 ```
