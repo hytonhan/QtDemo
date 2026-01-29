@@ -47,7 +47,7 @@ bool DatabaseService::openDatabase(QString name)
     else {
         QString dbDirectory = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
         QDir().mkpath(dbDirectory);
-        QString location = dbDirectory + name;
+        QString location = dbDirectory + "/" + name;
         db_.setDatabaseName(location);
     }
 
