@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 
     DatabaseService& dbService = DatabaseService::instance();
 
-    if (!dbService.openDatabase())
+    if (!dbService.openDatabase("koulu.db"))
         return -1;
     if (!dbService.initializeSchema())
         return -1;

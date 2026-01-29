@@ -71,6 +71,7 @@ add_library(QtDemoCore
     src/sql/fetch_teacherprograms.sql
     src/sql/link_programteacher.sql
     src/sql/unlink_programteacher.sql
+    src/resources.qrc
 )
 
 target_link_libraries(QtDemoCore
@@ -168,6 +169,32 @@ add_executable(test_programteacherassociationservice tests/services/test_program
     tests/services/fakeprogramteacherrepository.h)
 target_link_libraries(test_programteacherassociationservice PRIVATE Qt6::Test QtDemoCore)
 add_test(NAME test_programteacherassociationservice COMMAND test_programteacherassociationservice)
+
+
+add_executable(test_teacherrepository tests/infra/test_teacherrepository.cpp)
+target_link_libraries(test_teacherrepository PRIVATE Qt6::Test QtDemoCore)
+add_test(NAME test_teacherrepository COMMAND test_teacherrepository)
+
+add_executable(test_programrepository tests/infra/test_programrepository.cpp)
+target_link_libraries(test_programrepository PRIVATE Qt6::Test QtDemoCore)
+add_test(NAME test_programrepository COMMAND test_programrepository)
+
+add_executable(test_studentrepository tests/infra/test_studentrepository.cpp)
+target_link_libraries(test_studentrepository PRIVATE Qt6::Test QtDemoCore)
+add_test(NAME test_studentrepository COMMAND test_studentrepository)
+
+add_executable(test_programstudentrepository tests/infra/test_programstudentrepository.cpp)
+target_link_libraries(test_programstudentrepository PRIVATE Qt6::Test QtDemoCore)
+add_test(NAME test_programstudentrepository COMMAND test_programstudentrepository)
+
+add_executable(test_programteacherrepository tests/infra/test_programteacherrepository.cpp)
+target_link_libraries(test_programteacherrepository PRIVATE Qt6::Test QtDemoCore)
+add_test(NAME test_programteacherrepository COMMAND test_programteacherrepository)
+
+add_executable(test_databaseservice tests/infra/test_databaseservice.cpp)
+target_link_libraries(test_databaseservice PRIVATE Qt6::Test QtDemoCore)
+add_test(NAME test_databaseservice COMMAND test_databaseservice)
+
 
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

@@ -38,13 +38,18 @@ QString DatabaseService::loadSql(const QString& path)
 }
 
 
-bool DatabaseService::openDatabase()
+bool DatabaseService::openDatabase(QString name)
 {
     db_ = QSqlDatabase::addDatabase("QSQLITE");
-    QString dbDirectory = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-    QDir().mkpath(dbDirectory);
-    QString location = dbDirectory + "/koulu.db";
-    db_.setDatabaseName(location);
+    if (name == ":memory:") {
+        db_.setDatabaseName(name);
+    }
+    else {
+        QString dbDirectory = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+        QDir().mkpath(dbDirectory);
+        QString location = dbDirectory + name;
+        db_.setDatabaseName(location);
+    }
 
     if (!db_.open()) {
         qCritical() << "Database open failed:" << db_.lastError().text();
@@ -52,6 +57,13 @@ bool DatabaseService::openDatabase()
     }
 
     return true;
+}
+
+void DatabaseService::resetConnection()
+{
+    QString connectionName = db_.connectionName();
+    db_ = QSqlDatabase();
+    QSqlDatabase::removeDatabase(connectionName);
 }
 
 bool DatabaseService::initializeSchema()
