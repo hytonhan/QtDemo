@@ -148,6 +148,28 @@ add_executable(test_school tests/domain/test_school.cpp)
 target_link_libraries(test_school PRIVATE Qt6::Test QtDemoCore)
 add_test(NAME test_school COMMAND test_school)
 
+
+add_executable(test_teacherservice tests/services/test_teacherservice.cpp
+    tests/services/faketeacherrepository.h)
+target_link_libraries(test_teacherservice PRIVATE Qt6::Test QtDemoCore)
+add_test(NAME test_teacherservice COMMAND test_teacherservice)
+
+add_executable(test_programservice tests/services/test_programservice.cpp
+    tests/services/fakeprogramrepository.h)
+target_link_libraries(test_programservice PRIVATE Qt6::Test QtDemoCore)
+add_test(NAME test_programservice COMMAND test_programservice)
+
+add_executable(test_programstudentassociationservice tests/services/test_programstudentassociationservice.cpp
+    tests/services/fakeprogramstudentrepository.h)
+target_link_libraries(test_programstudentassociationservice PRIVATE Qt6::Test QtDemoCore)
+add_test(NAME test_programstudentassociationservice COMMAND test_programstudentassociationservice)
+
+add_executable(test_programteacherassociationservice tests/services/test_programteacherassociationservice.cpp
+    tests/services/fakeprogramteacherrepository.h)
+target_link_libraries(test_programteacherassociationservice PRIVATE Qt6::Test QtDemoCore)
+add_test(NAME test_programteacherassociationservice COMMAND test_programteacherassociationservice)
+
+
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
 # explicit, fixed bundle identifier manually though.

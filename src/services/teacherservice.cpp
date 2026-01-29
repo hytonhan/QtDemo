@@ -14,7 +14,7 @@ void TeacherService::removeTeacher(int teacherId)
     repo_.deleteTeacher(teacherId);
 }
 
-std::vector<Teacher> TeacherService::fetchTeacher()
+std::vector<Teacher> TeacherService::fetchTeachers()
 {
     return repo_.getTeachers();
 }

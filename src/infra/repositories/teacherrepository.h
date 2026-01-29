@@ -12,10 +12,11 @@ class TeacherRepository
 {
 public:
     explicit TeacherRepository(QSqlDatabase db);
+    virtual ~TeacherRepository() = default;
 
-    bool insertTeacher(const Teacher& teacher);
-    std::vector<Teacher> getTeachers() const;
-    bool deleteTeacher(int teacherId);
+    virtual bool insertTeacher(const Teacher& teacher);
+    virtual std::vector<Teacher> getTeachers() const;
+    virtual bool deleteTeacher(int teacherId);
 
 private:
     QSqlDatabase db_;

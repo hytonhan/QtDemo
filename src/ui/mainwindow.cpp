@@ -178,7 +178,7 @@ MainWindow::MainWindow(School* school,
 
 
     programModel_->setPrograms(programService_.fetchPrograms());
-    teacherModel_->setTeachers(teacherService_.fetchTeacher());
+    teacherModel_->setTeachers(teacherService_.fetchTeachers());
 }
 
 MainWindow::~MainWindow()
@@ -221,7 +221,7 @@ void MainWindow::onAddTeacherClicked()
         return;
 
     teacherService_.addTeacher(dialog.teacher());
-    teacherModel_->setTeachers(teacherService_.fetchTeacher());
+    teacherModel_->setTeachers(teacherService_.fetchTeachers());
 }
 
 void MainWindow::onRemoveTeacherClicked()
@@ -237,7 +237,7 @@ void MainWindow::onRemoveTeacherClicked()
         return;
 
     teacherService_.removeTeacher(teacher.id().toInt());
-    teacherModel_->setTeachers(teacherService_.fetchTeacher());
+    teacherModel_->setTeachers(teacherService_.fetchTeachers());
 }
 
 void MainWindow::onAddProgramClicked()

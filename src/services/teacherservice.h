@@ -13,7 +13,7 @@ public:
 
     void addTeacher(const Teacher& teacher);
     void removeTeacher(int teacherId);
-    std::vector<Teacher> fetchTeacher();
+    std::vector<Teacher> fetchTeachers();
 private:
     TeacherRepository& repo_;
 };

@@ -12,10 +12,11 @@ class ProgramRepository
 {
 public:
     explicit ProgramRepository(QSqlDatabase db);
+    virtual ~ProgramRepository() = default;
 
-    bool insertProgram(int schoolId, const Program& program);
-    std::vector<Program> getPrograms() const;
-    bool deleteProgram(int programId);
+    virtual bool insertProgram(int schoolId, const Program& program);
+    virtual std::vector<Program> getPrograms() const;
+    virtual bool deleteProgram(int programId);
 
 private:
     QSqlDatabase db_;
