@@ -86,6 +86,29 @@ To keep UI logic thin and domain logic reusable and testable.
 **Note:**  
 The UI layer intentionally contains minimal logic to keep the application maintainable and testable.
 
+## Testing
+
+Unit tests are implemented using **Qt Test**.
+
+### What is tested
+- Domain logic
+- Service layer behavior
+- Repository logic (using an in-memory SQLite database)
+
+### What is intentionally not tested
+- UI widgets
+- Layout and visual behavior
+
+### Running Tests
+
+```bash
+ctest
+```
+
+or directly:
+```
+./domain_tests
+```
 
 ## Build Instructions
 Requirements
@@ -104,5 +127,3 @@ Run the application:
 ```
 ./KouluHarkkaTyoQt
 ```
-**Note**
-This project was originally build on top of a school assigment, which was a pure terminal app, hence the project name
