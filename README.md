@@ -101,6 +101,7 @@ Unit tests are implemented using **Qt Test**.
 
 ### Running Tests
 
+You should build the project first before running tests. Instruction to build below. The test command should be run inside the build folder.
 ```bash
 ctest
 ```
