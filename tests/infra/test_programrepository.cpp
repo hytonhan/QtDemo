@@ -40,9 +40,9 @@ void TestProgramRepository::insertAndFetchProgram()
     ProgramRepository repo(db);
 
     Program p("1", "name");
-    QVERIFY(repo.insertProgram(1 ,p));
+    QVERIFY(!repo.insertProgram(1 ,p));
 
-    auto programs = repo.getPrograms();
+    auto programs = std::get<std::vector<Program>>(repo.getPrograms());
     QCOMPARE(programs.size(), 1);
     QCOMPARE(programs[0].name(), QString("name"));
 }
@@ -52,11 +52,11 @@ void TestProgramRepository::insertAndDeleteProgram()
     ProgramRepository repo(db);
 
     Program p("1", "name");
-    QVERIFY(repo.insertProgram(1, p));
+    QVERIFY(!repo.insertProgram(1, p));
 
-    QVERIFY(repo.deleteProgram(p.id().toInt()));
+    QVERIFY(!repo.deleteProgram(p.id().toInt()));
 
-    auto programs = repo.getPrograms();
+    auto programs = std::get<std::vector<Program>>(repo.getPrograms());
     QCOMPARE(programs.size(), 0);
 }
 

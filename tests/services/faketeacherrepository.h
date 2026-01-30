@@ -12,22 +12,22 @@ public:
 
     std::vector<Teacher> teachers;
 
-    bool insertTeacher(const Teacher& teacher) override
+    std::optional<QString> insertTeacher(const Teacher& teacher) override
     {
         insertCalled = true;
         teachers.push_back(teacher);
-        return true;
+        return std::nullopt;
     }
 
-    std::vector<Teacher> getTeachers() const override
+    std::variant<std::vector<Teacher>, QString> getTeachers() const override
     {
         return teachers;
     }
 
-    bool deleteTeacher(int teacherId)  override
+    std::optional<QString> deleteTeacher(int teacherId)  override
     {
         deleteCalled = true;
         deletedId = teacherId;
-        return true;
+        return std::nullopt;
     }
 };

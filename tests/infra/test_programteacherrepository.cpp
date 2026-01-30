@@ -51,7 +51,7 @@ void TestProgramTeacherRepository::assignAndFetchTeachers()
 
     repo.assignTeacher(1, 1);
 
-    auto teachers = repo.teachersForProgram(1);
+    auto teachers = std::get<std::vector<Teacher>>(repo.teachersForProgram(1));
     QCOMPARE(teachers.size(), 1);
     QCOMPARE(teachers[0].field(), QString("field"));
 }
@@ -69,12 +69,12 @@ void TestProgramTeacherRepository::removeTeacherFromProgram()
 
     repo.assignTeacher(1, 1);
 
-    auto teachers = repo.teachersForProgram(1);
+    auto teachers = std::get<std::vector<Teacher>>(repo.teachersForProgram(1));
     QCOMPARE(teachers.size(), 1);
     QCOMPARE(teachers[0].field(), QString("field"));
 
     repo.removeTeacher(1, 1);
-    teachers = repo.teachersForProgram(1);
+    teachers = std::get<std::vector<Teacher>>(repo.teachersForProgram(1));
     QCOMPARE(teachers.size(), 0);
 }
 
@@ -93,7 +93,7 @@ void TestProgramTeacherRepository::fetchTeachersNotInProgram()
     programRepo.insertProgram(1, Program("1", "name"));
     repo.assignTeacher(1, 1);
 
-    auto teachers = repo.teachersNotInProgram(1);
+    auto teachers = std::get<std::vector<Teacher>>(repo.teachersNotInProgram(1));
     QCOMPARE(teachers.size(), 1);
     QCOMPARE(teachers[0].firstName(), QString("second"));
 }
@@ -112,7 +112,7 @@ void TestProgramTeacherRepository::fetchProgramsForTeacher()
 
     repo.assignTeacher(1, 1);
 
-    auto programs = repo.programsForTeacher(1);
+    auto programs = std::get<std::vector<Program>>(repo.programsForTeacher(1));
     QCOMPARE(programs.size(), 1);
     QCOMPARE(programs[0].name(), QString("name"));
 }

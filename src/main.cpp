@@ -18,12 +18,27 @@ int main(int argc, char *argv[])
 
     DatabaseService& dbService = DatabaseService::instance();
 
-    if (!dbService.openDatabase("school.db"))
-        return -1;
-    if (!dbService.initializeSchema())
-        return -1;
-    if (!dbService.populateInitialData())
-        return -1;
+    if (dbService.openDatabase("school.db")) {
+        qCritical() << "Unable to open database";
+        QMessageBox::critical(nullptr,
+                              QObject::tr("Startup Error"),
+                              QObject::tr("The application could not open the database."));
+        return EXIT_FAILURE;
+    }
+    if (dbService.initializeSchema()) {
+        qCritical() << "Unable to initialize database";
+        QMessageBox::critical(nullptr,
+                              QObject::tr("Startup Error"),
+                              QObject::tr("The application could not initialzie database."));
+        return EXIT_FAILURE;
+    }
+    if (dbService.populateInitialData()) {
+        qCritical() << "Unable to initialize database";
+        QMessageBox::critical(nullptr,
+                              QObject::tr("Startup Error"),
+                              QObject::tr("The application could not initialzie database."));
+        return EXIT_FAILURE;
+    }
     const QSqlDatabase db = dbService.database();
 
     SchoolRepository schoolRepo(db);

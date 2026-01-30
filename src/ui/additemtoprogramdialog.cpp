@@ -1,5 +1,6 @@
 #include "additemtoprogramdialog.h"
 #include "ui_additemtoprogramdialog.h"
+#include <QMessageBox>
 
 AddItemToProgramDialog::AddItemToProgramDialog(
     const Program& program,
@@ -20,13 +21,26 @@ AddItemToProgramDialog::AddItemToProgramDialog(
     ui_->assignedListView->setModel(assignedModel_);
 
     auto available = associationService_.fetchAvailable(program_.id().toInt());
-    auto assigned = associationService_.fetchAssigned(program_.id().toInt());
+    if (std::holds_alternative<QString>(available)) {
+        qCritical() << std::get<QString>(available);
+        QMessageBox::critical(nullptr,
+                              QObject::tr("Loading error"),
+                              QObject::tr("The application could not load required data."));
+    }
 
-    availableModel_->setItems(available);
-    assignedModel_->setItems(assigned);
+    auto assigned = associationService_.fetchAssigned(program_.id().toInt());
+    if (std::holds_alternative<QString>(assigned)) {
+        qCritical() << std::get<QString>(assigned);
+        QMessageBox::critical(nullptr,
+                              QObject::tr("Loading error"),
+                              QObject::tr("The application could not load required data."));
+    }
+
+    availableModel_->setItems(std::get<std::vector<AssociationItem>>(available));
+    assignedModel_->setItems(std::get<std::vector<AssociationItem>>(assigned));
 
     std::vector<int> originals;
-    for(auto& a: assigned) {
+    for(auto& a: std::get<std::vector<AssociationItem>>(assigned)) {
         originals.push_back(a.id);
     }
     originalIds_ = originals;

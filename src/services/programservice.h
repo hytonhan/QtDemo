@@ -11,9 +11,9 @@ class ProgramService
 public:
     explicit ProgramService(ProgramRepository& repo);
 
-    void addProgram(int schoolId, const Program& program) const;
-    void removeProgram(int programId) const;
-    std::vector<Program> fetchPrograms() const;
+    std::optional<QString> addProgram(int schoolId, const Program& program) const;
+    std::optional<QString> removeProgram(int programId) const;
+    std::variant<std::vector<Program>, QString> fetchPrograms() const;
 
 private:
     ProgramRepository& repo_;

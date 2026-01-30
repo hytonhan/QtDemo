@@ -49,10 +49,19 @@ MainWindow::MainWindow(const School& school,
                 Program program = programModel_->programAt(current.row());
                 ui_->detailsLabel->setText(program.name());
 
-                programTeacherModel_->setTeachers(
-                    programTeacherService_.fetchAssigned(program.id().toInt()));
-                programStudentModel_->setStudents(
-                    programStudentService_.fetchAssigned(program.id().toInt()));
+                auto teachers = programTeacherService_.fetchAssigned(program.id().toInt());
+                if (std::holds_alternative<QString>(teachers)) {
+                    showLoadingError(std::get<QString>(teachers));
+                    return;
+                }
+                programTeacherModel_->setTeachers(std::get<std::vector<AssociationItem>>(teachers));
+
+                auto students = programStudentService_.fetchAssigned(program.id().toInt());
+                if (std::holds_alternative<QString>(students)) {
+                    showLoadingError(std::get<QString>(students));
+                    return;
+                }
+                programStudentModel_->setStudents(std::get<std::vector<AssociationItem>>(students));
             });
 
     connect(ui_->programsListView->selectionModel(),
@@ -136,8 +145,13 @@ MainWindow::MainWindow(const School& school,
             [this](const QModelIndex& current, const QModelIndex&)
             {
                 Teacher teacher = teacherModel_->teacherAt(current.row());
-                teacherProgramModel_->setPrograms(
-                    programTeacherService_.fetchPrograms(teacher.id().toInt()));
+
+                auto teachers = programTeacherService_.fetchPrograms(teacher.id().toInt());
+                if (std::holds_alternative<QString>(teachers)) {
+                    showLoadingError(std::get<QString>(teachers));
+                    return;
+                }
+                teacherProgramModel_->setPrograms(std::get<std::vector<Program>>(teachers));
             });
     connect(ui_->teachersListView->selectionModel(),
             &QItemSelectionModel::selectionChanged,
@@ -161,8 +175,26 @@ MainWindow::MainWindow(const School& school,
                 ui_->removeTeacherFromProgramButton_2->setEnabled(!selected.isEmpty());
             });
 
-    programModel_->setPrograms(programService_.fetchPrograms());
-    teacherModel_->setTeachers(teacherService_.fetchTeachers());
+    auto programs = programService_.fetchPrograms();
+    if (std::holds_alternative<QString>(programs)) {
+        showLoadingError(std::get<QString>(programs));
+        return;
+    }
+    programModel_->setPrograms(std::get<std::vector<Program>>(programs));
+
+    auto teachers = teacherService_.fetchTeachers();
+    if (std::holds_alternative<QString>(teachers)) {
+        showLoadingError(std::get<QString>(teachers));
+    }
+    teacherModel_->setTeachers(std::get<std::vector<Teacher>>(teachers));
+}
+
+void MainWindow::showLoadingError(const QString& error)
+{
+    qCritical() << error;
+    QMessageBox::critical(nullptr,
+                          QObject::tr("Loading error"),
+                          QObject::tr("The application could not load required data."));
 }
 
 MainWindow::~MainWindow()
@@ -192,10 +224,20 @@ void MainWindow::onRemoveTeacherFromProgramClicked2()
 
     programTeacherService_.unlink(program.id().toInt(), teacher.id().toInt());
     selectionModel->clearSelection();
-    teacherProgramModel_->setPrograms(
-        programTeacherService_.fetchPrograms(teacher.id().toInt()));
 
-    programTeacherModel_->setTeachers(programTeacherService_.fetchAssigned(program.id().toInt()));
+    auto programs = programTeacherService_.fetchPrograms(teacher.id().toInt());
+    if (std::holds_alternative<QString>(programs)) {
+        showLoadingError(std::get<QString>(programs));
+        return;
+    }
+    teacherProgramModel_->setPrograms(std::get<std::vector<Program>>(programs));
+
+    auto teachers = programTeacherService_.fetchAssigned(program.id().toInt());
+    if (std::holds_alternative<QString>(teachers)) {
+        showLoadingError(std::get<QString>(teachers));
+        return;
+    }
+    programTeacherModel_->setTeachers(std::get<std::vector<AssociationItem>>(teachers));
 }
 
 void MainWindow::onAddTeacherClicked()
@@ -205,7 +247,13 @@ void MainWindow::onAddTeacherClicked()
         return;
 
     teacherService_.addTeacher(dialog.teacher());
-    teacherModel_->setTeachers(teacherService_.fetchTeachers());
+
+    auto teachers = teacherService_.fetchTeachers();
+    if (std::holds_alternative<QString>(teachers)) {
+        showLoadingError(std::get<QString>(teachers));
+        return;
+    }
+    teacherModel_->setTeachers(std::get<std::vector<Teacher>>(teachers));
 }
 
 void MainWindow::onRemoveTeacherClicked()
@@ -221,7 +269,13 @@ void MainWindow::onRemoveTeacherClicked()
         return;
 
     teacherService_.removeTeacher(teacher.id().toInt());
-    teacherModel_->setTeachers(teacherService_.fetchTeachers());
+
+    auto teachers = teacherService_.fetchTeachers();
+    if (std::holds_alternative<QString>(teachers)) {
+        showLoadingError(std::get<QString>(teachers));
+        return;
+    }
+    teacherModel_->setTeachers(std::get<std::vector<Teacher>>(teachers));
 }
 
 void MainWindow::onAddProgramClicked()
@@ -230,8 +284,18 @@ void MainWindow::onAddProgramClicked()
     if (dialog.exec() != QDialog::Accepted)
         return;
 
-    programService_.addProgram(school_.id().toInt(), dialog.program());
-    programModel_->setPrograms(programService_.fetchPrograms());
+    auto error = programService_.addProgram(school_.id().toInt(), dialog.program());
+    if (error) {
+        showLoadingError(error.value());
+        return;
+    }
+
+    auto programs = programService_.fetchPrograms();
+    if (std::holds_alternative<QString>(programs)) {
+        showLoadingError(std::get<QString>(programs));
+        return;
+    }
+    programModel_->setPrograms(std::get<std::vector<Program>>(programs));
 }
 
 void MainWindow::onRemoveProgramClicked()
@@ -247,9 +311,20 @@ void MainWindow::onRemoveProgramClicked()
     if (dialog.exec() != QDialog::Accepted)
         return;
 
-    programService_.removeProgram(program.id().toInt());
+    auto error = programService_.removeProgram(program.id().toInt());
+    if (error) {
+        showLoadingError(error.value());
+        return;
+    }
     selectionModel->clearSelection();
-    programModel_->setPrograms(programService_.fetchPrograms());
+
+
+    auto programs = programService_.fetchPrograms();
+    if (std::holds_alternative<QString>(programs)) {
+        showLoadingError(std::get<QString>(programs));
+        return;
+    }
+    programModel_->setPrograms(std::get<std::vector<Program>>(programs));
     ui_->detailsLabel->setText(QString());
 }
 
@@ -266,8 +341,13 @@ void MainWindow::onAddStudentToProgramClicked()
         this);
     if (dialog.exec() != QDialog::Accepted)
         return;
-    programStudentModel_->setStudents(
-        programStudentService_.fetchAssigned(program.id().toInt()));
+
+    auto students = programStudentService_.fetchAssigned(program.id().toInt());
+    if (std::holds_alternative<QString>(students)) {
+        showLoadingError(std::get<QString>(students));
+        return;
+    }
+    programStudentModel_->setStudents(std::get<std::vector<AssociationItem>>(students));
 }
 
 void MainWindow::onRemoveStudentFromProgramClicked()
@@ -290,10 +370,20 @@ void MainWindow::onRemoveStudentFromProgramClicked()
         return;
     Program program = programModel_->programAt(currentProgram.row());
 
-    programStudentService_.unlink(program.id().toInt(), student.id);
+    auto error = programStudentService_.unlink(program.id().toInt(), student.id);
+    if (error)
+    {
+        showLoadingError(error.value());
+        return;
+    }
     selectionModel->clearSelection();
-    programStudentModel_->setStudents(
-        programStudentService_.fetchAssigned(program.id().toInt()));
+
+    auto students = programStudentService_.fetchAssigned(program.id().toInt());
+    if (std::holds_alternative<QString>(students)) {
+        showLoadingError(std::get<QString>(students));
+        return;
+    }
+    programStudentModel_->setStudents(std::get<std::vector<AssociationItem>>(students));
 }
 
 void MainWindow::onAddTeacherToProgramClicked()
@@ -310,7 +400,12 @@ void MainWindow::onAddTeacherToProgramClicked()
     if (dialog.exec() != QDialog::Accepted)
         return;
 
-    programTeacherModel_->setTeachers(programTeacherService_.fetchAssigned(program.id().toInt()));
+    auto teachers = programTeacherService_.fetchAssigned(program.id().toInt());
+    if (std::holds_alternative<QString>(teachers)) {
+        showLoadingError(std::get<QString>(teachers));
+        return;
+    }
+    programTeacherModel_->setTeachers(std::get<std::vector<AssociationItem>>(teachers));
 }
 
 void MainWindow::onRemoveTeacherFromProgramClicked()
@@ -333,9 +428,19 @@ void MainWindow::onRemoveTeacherFromProgramClicked()
         return;
     Program program = programModel_->programAt(currentProgram.row());
 
-    programTeacherService_.unlink(program.id().toInt(), teacher.id);
+    auto error = programTeacherService_.unlink(program.id().toInt(), teacher.id);
+    if (error) {
+        showLoadingError(error.value());
+        return;
+    }
     selectionModel->clearSelection();
-    programTeacherModel_->setTeachers(programTeacherService_.fetchAssigned(program.id().toInt()));
+
+    auto teachers = programTeacherService_.fetchAssigned(program.id().toInt());
+    if (std::holds_alternative<QString>(teachers)) {
+        showLoadingError(std::get<QString>(teachers));
+        return;
+    }
+    programTeacherModel_->setTeachers(std::get<std::vector<AssociationItem>>(teachers));
 }
 
 void MainWindow::onItemDoubleClicked(const QModelIndex& index)

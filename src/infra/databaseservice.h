@@ -9,9 +9,9 @@ class DatabaseService
 public:
     static DatabaseService& instance();
     QSqlDatabase database() const;
-    bool openDatabase(QString name);
-    bool populateInitialData();
-    bool initializeSchema();
+    std::optional<QString> openDatabase(QString name);
+    std::optional<QString> populateInitialData();
+    std::optional<QString> initializeSchema();
     void resetConnection();
     static QString loadSql(const QString& path);
 private:

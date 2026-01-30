@@ -42,7 +42,7 @@ void TestProgramService::programsAreReturned()
         );
 
     ProgramService service(repo);
-    auto result = service.fetchPrograms();
+    auto result = std::get<std::vector<Program>>(service.fetchPrograms());
 
     QCOMPARE(result.size(), 1);
     QCOMPARE(result[0].name(), QString("name"));

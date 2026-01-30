@@ -5,19 +5,19 @@
 #include "../databaseservice.h"
 #include "studentrepository.h"
 
-StudentRepository::StudentRepository(const QSqlDatabase& db) {}
+StudentRepository::StudentRepository(const QSqlDatabase& db)
+    :db_(db)
+{}
 
-bool StudentRepository::insertStudent(const Student& student)
+std::optional<QString> StudentRepository::insertStudent(const Student& student)
 {
     QSqlQuery query(db_);
     QString queryString = DatabaseService::loadSql(":/sql/sql/insert_student.sql");
     if (queryString.isEmpty()) {
-        qCritical() << "Couldn't sql command file or it was empty.";
-        return false;
+        return QString("Couldn't sql command file or it was empty:  %1").arg(query.lastError().text());
     }
     if (!query.prepare(queryString)) {
-        qCritical() << "Insert preparation failed:" << query.lastError().text();
-        return false;
+        return QString("Insert preparation failed: %1").arg(query.lastError().text());
     }
     query.bindValue(":firstName", student.firstName());
     query.bindValue(":lastName", student.lastName());
@@ -25,28 +25,24 @@ bool StudentRepository::insertStudent(const Student& student)
     query.bindValue(":phoneNumber", student.phoneNumber());
 
     if (!query.exec()) {
-        qCritical() << "Failed to insert student:" << query.lastError().text();
-        return false;
+        return QString("Failed to insert student: %1").arg(query.lastError().text());
     }
-    return true;
+    return std::nullopt;
 }
 
-std::vector<Student> StudentRepository::getStudents() const
+std::variant<std::vector<Student>, QString> StudentRepository::getStudents() const
 {
     std::vector<Student> students;
     QSqlQuery query(db_);
     QString queryString = DatabaseService::loadSql(":/sql/sql/fetch_students.sql");
     if (queryString.isEmpty()) {
-        qCritical() << "Fetch command was empty or not found";
-        return std::vector<Student>();
+        return QString("Fetch command was empty or not found: %1").arg(query.lastError().text());
     }
     if (!query.prepare(queryString)) {
-        qCritical() << "Query preparation failed:" << query.lastError().text();
-        return std::vector<Student>();
+        return QString("Query preparation failed: %1").arg(query.lastError().text());
     }
     if (!query.exec()) {
-        qCritical() << "Failed to fetch students:" << query.lastError().text();
-        return std::vector<Student>();
+        return QString("Failed to fetch students: %1").arg(query.lastError().text());
     }
     while (query.next()) {
         students.emplace_back(query.value("firstName").toString(),
@@ -58,22 +54,19 @@ std::vector<Student> StudentRepository::getStudents() const
     return students;
 }
 
-bool StudentRepository::deleteStudent(const Student& student)
+std::optional<QString> StudentRepository::deleteStudent(const Student& student)
 {
     QString queryString = DatabaseService::loadSql(":/sql/sql/delete_student.sql");
     QSqlQuery query(db_);
     if (queryString.isEmpty()) {
-        qCritical() << "Delete command was empty or not found";
-        return false;
+        return QString("Delete command was empty or not found: %1").arg(query.lastError().text());
     }
     if (!query.prepare(queryString)) {
-        qCritical() << "Query preparation failed:" << query.lastError().text();
-        return false;
+        return QString("Query preparation failed: %1").arg(query.lastError().text());
     }
     query.bindValue(":id", student.id());
     if (!query.exec()) {
-        qCritical() << "Failed to delete student:" << query.lastError().text();
-        return false;
+        return QString("Failed to delete student: %1").arg(query.lastError().text());
     }
-    return true;
+    return std::nullopt;
 }

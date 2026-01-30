@@ -38,7 +38,7 @@ QString DatabaseService::loadSql(const QString& path)
 }
 
 
-bool DatabaseService::openDatabase(QString name)
+std::optional<QString> DatabaseService::openDatabase(QString name)
 {
     db_ = QSqlDatabase::addDatabase("QSQLITE");
     if (name == ":memory:") {
@@ -52,11 +52,10 @@ bool DatabaseService::openDatabase(QString name)
     }
 
     if (!db_.open()) {
-        qCritical() << "Database open failed:" << db_.lastError().text();
-        return false;
+        return QString("Database open failed: %1").arg(db_.lastError().text());
     }
 
-    return true;
+    return std::nullopt;
 }
 
 void DatabaseService::resetConnection()
@@ -66,45 +65,39 @@ void DatabaseService::resetConnection()
     QSqlDatabase::removeDatabase(connectionName);
 }
 
-bool DatabaseService::initializeSchema()
+std::optional<QString> DatabaseService::initializeSchema()
 {
     QSqlQuery query;
     query.exec("PRAGMA foreign_keys = ON");
     QString schemaSql = loadSql(QString::fromStdString(":/sql/sql/schema.sql"));
     if (schemaSql.isEmpty()) {
-        qCritical() << "Couldn't find database init file or it was empty.";
-        return false;
+        return QString("Couldn't find database init file or it was empty: %1").arg(query.lastError().text());
     }
 
     for (const QString& statement : schemaSql.split(";", Qt::SkipEmptyParts)) {
         if (statement.trimmed().isEmpty())
             continue;
         if (!query.exec(statement.trimmed())) {
-            qCritical() << "SQL error:" << query.lastError().text();
-            qCritical() << "Statement:" << statement;
-            return false;
+            return QString("SQL error: %1\nStatement: %2").arg(query.lastError().text(), statement);
         }
     }
 
-    return true;
+    return std::nullopt;
 }
 
-bool DatabaseService::populateInitialData()
+std::optional<QString> DatabaseService::populateInitialData()
 {
     QSqlQuery query;
     QString initialDataQuery = loadSql(QString::fromStdString(":/sql/sql/initial_data.sql"));
     if (initialDataQuery.isEmpty()) {
-        qCritical() << "Couldn't find database initial data file or it was empty.";
-        return false;
+        return QString("Couldn't find database initial data file or it was empty. %1").arg(query.lastError().text());
     }
     for (const QString& statement : initialDataQuery.split(";", Qt::SkipEmptyParts)) {
         if (statement.trimmed().isEmpty())
             continue;
         if (!query.exec(statement)) {
-            qCritical() << "SQL error: " << query.lastError().text();
-            qCritical() << "Query:" << statement;
-            return false;
+            return QString("SQL error:  %1\nQuery: %2").arg(query.lastError().text(), statement);
         }
     }
-    return true;
+    return std::nullopt;
 }

@@ -14,12 +14,12 @@ public:
     explicit ProgramStudentRepository(const QSqlDatabase& db);
     virtual ~ProgramStudentRepository() = default;
 
-    virtual std::vector<Student> studentsForProgram(int programId)  const;
-    virtual std::vector<Student> studentsNotInProgram(int programId)  const;
-    virtual std::vector<Program> programsForStudent(int studentId) const;
+    virtual std::variant<std::vector<Student>, QString> studentsForProgram(int programId)  const;
+    virtual std::variant<std::vector<Student>, QString> studentsNotInProgram(int programId)  const;
+    virtual std::variant<std::vector<Program>, QString> programsForStudent(int studentId) const;
 
-    virtual void assignStudent(int programId, int studentId);
-    virtual void removeStudent(int programId, int studentId);
+    virtual std::optional<QString> assignStudent(int programId, int studentId);
+    virtual std::optional<QString> removeStudent(int programId, int studentId);
 private:
     QSqlDatabase db_;
 };

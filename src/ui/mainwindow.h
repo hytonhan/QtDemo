@@ -51,6 +51,7 @@ private:
 private:
     void updateProgramCount();
     void updateOpettajatCount();
+    void showLoadingError(const QString& error);
 private slots:
     void onItemDoubleClicked(const QModelIndex& index);
     void onItemClicked(const QModelIndex& index);

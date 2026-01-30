@@ -42,7 +42,7 @@ void TestTeacherService::teachersAreReturned()
         );
 
     TeacherService service(repo);
-    auto result = service.fetchTeachers();
+    auto result = std::get<std::vector<Teacher>>(service.fetchTeachers());
 
     QCOMPARE(result.size(), 1);
     QCOMPARE(result[0].firstName(), QString("first"));

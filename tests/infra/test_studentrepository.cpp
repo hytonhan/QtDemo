@@ -37,9 +37,9 @@ void TestStudentRepository::insertAndFetchStudent()
     StudentRepository repo(db);
 
     Student s("first", "last", "address", "phone", "1");
-    QVERIFY(repo.insertStudent(s));
+    QVERIFY(!repo.insertStudent(s));
 
-    auto students = repo.getStudents();
+    auto students = std::get<std::vector<Student>>(repo.getStudents());
     QCOMPARE(students.size(), 1);
     QCOMPARE(students[0].firstName(), QString("first"));
 }
@@ -49,11 +49,11 @@ void TestStudentRepository::insertAndDeleteStudent()
     StudentRepository repo(db);
 
     Student s("first", "last", "address", "phone", "1");
-    QVERIFY(repo.insertStudent(s));
+    QVERIFY(!repo.insertStudent(s));
 
-    QVERIFY(repo.deleteStudent(s));
+    QVERIFY(!repo.deleteStudent(s));
 
-    auto students = repo.getStudents();
+    auto students = std::get<std::vector<Student>>(repo.getStudents());
     QCOMPARE(students.size(), 0);
 }
 

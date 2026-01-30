@@ -9,12 +9,12 @@ class ProgramTeacherAssociationService : public ProgramAssociationService
 public:
     explicit ProgramTeacherAssociationService(ProgramTeacherRepository& repo);
 
-    std::vector<AssociationItem> fetchAvailable(int programId) const override;
-    std::vector<AssociationItem> fetchAssigned(int programId) const override;
-    std::vector<Program> fetchPrograms(int teacherId) const override;
+    std::variant<std::vector<AssociationItem>, QString> fetchAvailable(int programId) const override;
+    std::variant<std::vector<AssociationItem>, QString> fetchAssigned(int programId) const override;
+    std::variant<std::vector<Program>, QString> fetchPrograms(int teacherId) const override;
 
-    void link(int programId, int teacherId) override;
-    void unlink(int programId, int teacherId) override;
+    std::optional<QString> link(int programId, int teacherId) override;
+    std::optional<QString> unlink(int programId, int teacherId) override;
 
 private:
     ProgramTeacherRepository& repo_;

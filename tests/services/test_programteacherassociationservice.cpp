@@ -44,7 +44,7 @@ void TestProgramTeacherAssociationService::programsAreReturned()
         );
 
     ProgramTeacherAssociationService service(repo);
-    auto result = service.fetchPrograms(1);
+    auto result = std::get<std::vector<Program>>(service.fetchPrograms(1));
 
     QCOMPARE(result.size(), 1);
     QCOMPARE(result[0].name(), QString("name"));
@@ -58,7 +58,7 @@ void TestProgramTeacherAssociationService::teachersInProgramAreReturned()
         );
 
     ProgramTeacherAssociationService service(repo);
-    auto result = service.fetchAssigned(1);
+    auto result = std::get<std::vector<AssociationItem>>(service.fetchAssigned(1));
 
     QCOMPARE(result.size(), 1);
     QCOMPARE(result[0].displayName, QString("first last"));
@@ -72,7 +72,7 @@ void TestProgramTeacherAssociationService::teachersNotInProgramsAreReturned()
         );
 
     ProgramTeacherAssociationService service(repo);
-    auto result = service.fetchAvailable(1);
+    auto result = std::get<std::vector<AssociationItem>>(service.fetchAvailable(1));
 
     QCOMPARE(result.size(), 1);
     QCOMPARE(result[0].displayName, QString("first last"));

@@ -14,23 +14,23 @@ public:
 
     std::vector<Program> programs;
 
-    bool insertProgram(int schoolId, const Program& program) override
+    std::optional<QString> insertProgram(int schoolId, const Program& program) override
     {
         insertCalled = true;
         programs.push_back(program);
-        return true;
+        return std::nullopt;
     }
 
-    std::vector<Program> getPrograms() const override
+    std::variant<std::vector<Program>, QString> getPrograms() const override
     {
         return programs;
     }
 
-    bool deleteProgram(int programId)  override
+    std::optional<QString> deleteProgram(int programId)  override
     {
         deleteCalled = true;
         deletedId = programId;
-        return true;
+        return std::nullopt;
     }
 };
 

@@ -14,9 +14,9 @@ public:
     explicit ProgramRepository(const QSqlDatabase& db);
     virtual ~ProgramRepository() = default;
 
-    virtual bool insertProgram(int schoolId, const Program& program);
-    virtual std::vector<Program> getPrograms() const;
-    virtual bool deleteProgram(int programId);
+    virtual std::optional<QString> insertProgram(int schoolId, const Program& program);
+    virtual std::variant<std::vector<Program>, QString> getPrograms() const;
+    virtual std::optional<QString> deleteProgram(int programId);
 
 private:
     QSqlDatabase db_;

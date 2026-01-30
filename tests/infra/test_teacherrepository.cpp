@@ -37,9 +37,9 @@ void TestTeacherRepository::insertAndFetchTeacher()
     TeacherRepository repo(db);
 
     Teacher t("first", "last", "address", "phone", "1", 4500, "field");
-    QVERIFY(repo.insertTeacher(t));
+    QVERIFY(!repo.insertTeacher(t));
 
-    auto teachers = repo.getTeachers();
+    auto teachers = std::get<std::vector<Teacher>>(repo.getTeachers());
     QCOMPARE(teachers.size(), 1);
     QCOMPARE(teachers[0].field(), QString("field"));
 }
@@ -49,11 +49,11 @@ void TestTeacherRepository::insertAndDeleteTeacher()
     TeacherRepository repo(db);
 
     Teacher t("first", "last", "address", "phone", "1", 4500, "field");
-    QVERIFY(repo.insertTeacher(t));
+    QVERIFY(!repo.insertTeacher(t));
 
-    QVERIFY(repo.deleteTeacher(t.id().toInt()));
+    QVERIFY(!repo.deleteTeacher(t.id().toInt()));
 
-    auto teachers = repo.getTeachers();
+    auto teachers = std::get<std::vector<Teacher>>(repo.getTeachers());
     QCOMPARE(teachers.size(), 0);
 }
 

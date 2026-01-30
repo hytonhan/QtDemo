@@ -6,21 +6,19 @@
 ProgramTeacherRepository::ProgramTeacherRepository(const QSqlDatabase& db) {}
 
 
-std::vector<Teacher> ProgramTeacherRepository::teachersForProgram(int programId) const
+std::variant<std::vector<Teacher>, QString> ProgramTeacherRepository::teachersForProgram(int programId) const
 {
     QSqlQuery query(db_);
     const QString queryString = DatabaseService::loadSql(":/sql/sql/fetch_programteachers.sql");
     if (queryString.isEmpty()) {
-        qCritical() << "Couldn't sql command file or it was empty.";
-        return std::vector<Teacher>();
+        return QString("Couldn't sql command file or it was empty. %1").arg(query.lastError().text());
     }
     query.prepare(queryString);
     query.bindValue(":program_id", programId);
 
     if (!query.exec()) {
         auto foo = query.lastError().text();
-        qCritical() << "Failed to fetch teachers of program:" << query.lastError().text();
-        return std::vector<Teacher>();
+        return QString("Failed to fetch teachers of program: %1").arg(query.lastError().text());
     }
 
     std::vector<Teacher> teachers;
@@ -36,13 +34,12 @@ std::vector<Teacher> ProgramTeacherRepository::teachersForProgram(int programId)
     return teachers;
 }
 
-std::vector<Teacher> ProgramTeacherRepository::teachersNotInProgram(int programId) const
+std::variant<std::vector<Teacher>, QString> ProgramTeacherRepository::teachersNotInProgram(int programId) const
 {
     QSqlQuery query(db_);
     const QString queryString = DatabaseService::loadSql(":/sql/sql/fetch_teachersnotinprogram.sql");
     if (queryString.isEmpty()) {
-        qCritical() << "Couldn't sql command file or it was empty.";
-        return std::vector<Teacher>();
+        return QString("Couldn't sql command file or it was empty. %1").arg(query.lastError().text());
     }
     query.prepare(queryString);
 
@@ -50,8 +47,7 @@ std::vector<Teacher> ProgramTeacherRepository::teachersNotInProgram(int programI
 
     if (!query.exec()) {
         auto lastError = query.lastError().text();
-        qCritical() << "Failed to fetch teachers not in program:" << query.lastError().text();
-        return std::vector<Teacher>();
+        return QString("Failed to fetch teachers not in program: %1").arg(query.lastError().text());
     }
 
     std::vector<Teacher> opettajat;
@@ -67,20 +63,18 @@ std::vector<Teacher> ProgramTeacherRepository::teachersNotInProgram(int programI
     return opettajat;
 }
 
-std::vector<Program> ProgramTeacherRepository::programsForTeacher(int teacherId) const
+std::variant<std::vector<Program>, QString> ProgramTeacherRepository::programsForTeacher(int teacherId) const
 {
     QSqlQuery query(db_);
     const QString queryString = DatabaseService::loadSql(":/sql/sql/fetch_teacherprograms.sql");
     if (queryString.isEmpty()) {
-        qCritical() << "Couldn't sql command file or it was empty.";
-        return std::vector<Program>();
+        return QString("Couldn't sql command file or it was empty. %1").arg(query.lastError().text());
     }
     query.prepare(queryString);
     query.bindValue(":teacher_id", teacherId);
     if (!query.exec()) {
         auto lastError = query.lastError().text();
-        qCritical() << "Failed to fetch programs of teacher" << query.lastError().text();
-        return std::vector<Program>();
+        return QString("Failed to fetch programs of teacher: %1").arg(query.lastError().text());
     }
 
     std::vector<Program> programs;
@@ -92,13 +86,12 @@ std::vector<Program> ProgramTeacherRepository::programsForTeacher(int teacherId)
     return programs;
 }
 
-void ProgramTeacherRepository::assignTeacher(int programId, int teacherId)
+std::optional<QString> ProgramTeacherRepository::assignTeacher(int programId, int teacherId)
 {
     QSqlQuery query(db_);
     const QString queryString = DatabaseService::loadSql(":/sql/sql/link_programteacher.sql");
     if (queryString.isEmpty()) {
-        qCritical() << "Couldn't sql command file or it was empty.";
-        return;
+        return QString("Couldn't sql command file or it was empty. %1").arg(query.lastError().text());
     }
     query.prepare(queryString);
 
@@ -106,20 +99,17 @@ void ProgramTeacherRepository::assignTeacher(int programId, int teacherId)
     query.bindValue(":teacher_id", teacherId);
 
     if (!query.exec()) {
-        qCritical() << "Failed to link teacher to program:"
-                    << query.lastError().text();
-        return;
+        return QString("Failed to link teacher to program: %1").arg(query.lastError().text());
     }
-    return;
+    return std::nullopt;
 }
 
-void ProgramTeacherRepository::removeTeacher(int programId, int teacherId)
+std::optional<QString> ProgramTeacherRepository::removeTeacher(int programId, int teacherId)
 {
     QSqlQuery query(db_);
     const QString queryString = DatabaseService::loadSql(":/sql/sql/unlink_programteacher.sql");
     if (queryString.isEmpty()) {
-        qCritical() << "Couldn't sql command file or it was empty.";
-        return;
+        return QString("Couldn't sql command file or it was empty. %1").arg(query.lastError().text());
     }
     query.prepare(queryString);
 
@@ -127,8 +117,7 @@ void ProgramTeacherRepository::removeTeacher(int programId, int teacherId)
     query.bindValue(":program_id", programId);
 
     if (!query.exec()) {
-        qCritical() << "Failed to unlink teacher and program:" << query.lastError().text();
-        return;
+        return QString("Failed to unlink teacher and program: %1").arg(query.lastError().text());
     }
-    return;
+    return std::nullopt;
 }

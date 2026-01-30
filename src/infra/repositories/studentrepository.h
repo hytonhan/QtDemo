@@ -13,9 +13,9 @@ class StudentRepository
 public:
     explicit StudentRepository(const QSqlDatabase& db);
 
-    bool insertStudent(const Student& student);
-    std::vector<Student> getStudents() const;
-    bool deleteStudent(const Student& student);
+    std::optional<QString> insertStudent(const Student& student);
+    std::variant<std::vector<Student>, QString> getStudents() const;
+    std::optional<QString> deleteStudent(const Student& student);
 
 private:
     QSqlDatabase db_;

@@ -4,17 +4,17 @@ ProgramService::ProgramService(ProgramRepository& repo)
     : repo_(repo) {}
 
 
-void ProgramService::addProgram(int schoolId, const Program& program) const
+std::optional<QString> ProgramService::addProgram(int schoolId, const Program& program) const
 {
-    repo_.insertProgram(schoolId, program);
+    return repo_.insertProgram(schoolId, program);
 }
 
-void ProgramService::removeProgram(int programId) const
+std::optional<QString> ProgramService::removeProgram(int programId) const
 {
-    repo_.deleteProgram(programId);
+    return repo_.deleteProgram(programId);
 }
 
-std::vector<Program> ProgramService::fetchPrograms() const
+std::variant<std::vector<Program>, QString> ProgramService::fetchPrograms() const
 {
     return repo_.getPrograms();
 }

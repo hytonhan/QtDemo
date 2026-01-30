@@ -11,9 +11,9 @@ class TeacherService
 public:
     explicit TeacherService(TeacherRepository& repo);
 
-    void addTeacher(const Teacher& teacher) const;
-    void removeTeacher(int teacherId) const;
-    std::vector<Teacher> fetchTeachers() const;
+    std::optional<QString> addTeacher(const Teacher& teacher) const;
+    std::optional<QString> removeTeacher(int teacherId) const;
+    std::variant<std::vector<Teacher>, QString> fetchTeachers() const;
 private:
     TeacherRepository& repo_;
 };

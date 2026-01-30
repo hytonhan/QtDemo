@@ -16,33 +16,33 @@ public:
     std::vector<Program> programs;
     std::vector<Teacher> teachers;
 
-    std::vector<Teacher> teachersForProgram(int programId) const override
+    std::variant<std::vector<Teacher>, QString> teachersForProgram(int programId) const override
     {
         return teachers;
     }
 
-    std::vector<Teacher> teachersNotInProgram(int programId) const override
+    std::variant<std::vector<Teacher>, QString> teachersNotInProgram(int programId) const override
     {
         return teachers;
     }
 
-    std::vector<Program> programsForTeacher(int teacherId) const override
+    std::variant<std::vector<Program>, QString> programsForTeacher(int teacherId) const override
     {
         return programs;
     }
 
-    void assignTeacher(int programId, int teacherId) override
+    std::optional<QString> assignTeacher(int programId, int teacherId) override
     {
         assignCalled = true;
         assignedId = teacherId;
-        return;
+        return std::nullopt;
     }
 
-    void removeTeacher(int programId, int teacherId) override
+    std::optional<QString> removeTeacher(int programId, int teacherId) override
     {
         deleteCalled = true;
         deletedId = teacherId;
-        return;
+        return std::nullopt;
     }
 };
 

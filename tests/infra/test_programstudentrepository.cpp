@@ -51,7 +51,7 @@ void TestProgramStudentRepository::assignAndFetchStudents()
 
     repo.assignStudent(1, 1);
 
-    auto students = repo.studentsForProgram(1);
+    auto students = std::get<std::vector<Student>>(repo.studentsForProgram(1));
     QCOMPARE(students.size(), 1);
     QCOMPARE(students[0].firstName(), QString("first"));
 }
@@ -69,12 +69,12 @@ void TestProgramStudentRepository::removeStudentFromProgram()
 
     repo.assignStudent(1, 1);
 
-    auto students = repo.studentsForProgram(1);
+    auto students = std::get<std::vector<Student>>(repo.studentsForProgram(1));
     QCOMPARE(students.size(), 1);
     QCOMPARE(students[0].lastName(), QString("last"));
 
     repo.removeStudent(1, 1);
-    students = repo.studentsForProgram(1);
+    students = std::get<std::vector<Student>>(repo.studentsForProgram(1));
     QCOMPARE(students.size(), 0);
 }
 
@@ -93,7 +93,7 @@ void TestProgramStudentRepository::fetchStudentsNotInProgram()
     programRepo.insertProgram(1, Program("1", "name"));
     repo.assignStudent(1, 1);
 
-    auto students = repo.studentsNotInProgram(1);
+    auto students = std::get<std::vector<Student>>(repo.studentsNotInProgram(1));
     QCOMPARE(students.size(), 1);
     QCOMPARE(students[0].firstName(), QString("second"));
 }
@@ -112,7 +112,7 @@ void TestProgramStudentRepository::fetchProgramsForStudent()
 
     repo.assignStudent(1, 1);
 
-    auto programs = repo.programsForStudent(1);
+    auto programs = std::get<std::vector<Program>>(repo.programsForStudent(1));
     QCOMPARE(programs.size(), 1);
     QCOMPARE(programs[0].name(), QString("name"));
 }
