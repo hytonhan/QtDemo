@@ -33,64 +33,64 @@
    <item>
     <layout class="QFormLayout" name="formLayout">
      <item row="0" column="1">
-      <widget class="QLineEdit" name="etunimiLineEdit"/>
+      <widget class="QLineEdit" name="firstNameLineEdit"/>
      </item>
      <item row="0" column="0">
-      <widget class="QLabel" name="etunimiLabel">
+      <widget class="QLabel" name="firstNameLabel">
        <property name="text">
         <string>Etunimi</string>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="sukunimiLineEdit"/>
+      <widget class="QLineEdit" name="lastNameLineEdit"/>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="sukunimiLabel">
+      <widget class="QLabel" name="lastNameLabel">
        <property name="text">
         <string>Sukunimi</string>
        </property>
       </widget>
      </item>
      <item row="2" column="0">
-      <widget class="QLabel" name="osoiteLabel">
+      <widget class="QLabel" name="addressLabel">
        <property name="text">
         <string>Osoite</string>
        </property>
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="osoiteLineEdit"/>
+      <widget class="QLineEdit" name="addressLineEdit"/>
      </item>
      <item row="3" column="0">
-      <widget class="QLabel" name="puhelinLabel">
+      <widget class="QLabel" name="phoneLabel">
        <property name="text">
         <string>Puhelin</string>
        </property>
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="puhelinLineEdit"/>
+      <widget class="QLineEdit" name="phoneLineEdit"/>
      </item>
      <item row="4" column="0">
-      <widget class="QLabel" name="alaLabel">
+      <widget class="QLabel" name="fieldLabel">
        <property name="text">
         <string>Ala</string>
        </property>
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QLineEdit" name="alaLineEdit"/>
+      <widget class="QLineEdit" name="fieldLineEdit"/>
      </item>
      <item row="5" column="0">
-      <widget class="QLabel" name="palkkaLabel">
+      <widget class="QLabel" name="salaryLabel">
        <property name="text">
         <string>Palkka</string>
        </property>
       </widget>
      </item>
      <item row="5" column="1">
-      <widget class="QLineEdit" name="palkkaLineEdit"/>
+      <widget class="QLineEdit" name="salaryLineEdit"/>
      </item>
     </layout>
    </item>

@@ -13,10 +13,10 @@
 #include "../services/programstudentassociationservice.h"
 
 MainWindow::MainWindow(School* school,
-                       ProgramService &programService,
-                       TeacherService &teacherService,
-                       ProgramTeacherAssociationService &programTeacherService,
-                       ProgramStudentAssociationService &programStudentService,
+                       ProgramService& programService,
+                       TeacherService& teacherService,
+                       ProgramTeacherAssociationService& programTeacherService,
+                       ProgramStudentAssociationService& programStudentService,
                        QWidget* parent)
     : QMainWindow(parent)
     , school_(school)
@@ -35,19 +35,19 @@ MainWindow::MainWindow(School* school,
     teacherModel_ = new TeachersListModel(this);
     teacherProgramModel_ = new TeacherProgramListModel(this);
 
-    ui_->koulutusohjelmatListView->setModel(programModel_);
-    ui_->koulutusOhjelmanOpettajatListView->setModel(programTeacherModel_);
-    ui_->koulutusOhjelmanOppilaatListView->setModel(programStudentModel_);
-    ui_->opettajatListView_2->setModel(teacherModel_);
-    ui_->opettajanKoulutusOhjelmatListView->setModel(teacherProgramModel_);
+    ui_->programsListView->setModel(programModel_);
+    ui_->programsTeachersListView->setModel(programTeacherModel_);
+    ui_->programStudentsListView->setModel(programStudentModel_);
+    ui_->teachersListView->setModel(teacherModel_);
+    ui_->teacherProgramsListView->setModel(teacherProgramModel_);
 
-    connect(ui_->koulutusohjelmatListView->selectionModel(),
+    connect(ui_->programsListView->selectionModel(),
             &QItemSelectionModel::currentChanged,
             this,
             [this](const QModelIndex& current, const QModelIndex&)
             {
                 Program program = programModel_->programAt(current.row());
-                ui_->lisatiedotLabel->setText(program.name());
+                ui_->detailsLabel->setText(program.name());
 
                 programTeacherModel_->setTeachers(
                     programTeacherService_.fetchAssigned(program.id().toInt()));
@@ -55,29 +55,29 @@ MainWindow::MainWindow(School* school,
                     programStudentService_.fetchAssigned(program.id().toInt()));
             });
 
-    connect(ui_->koulutusohjelmatListView->selectionModel(),
+    connect(ui_->programsListView->selectionModel(),
             &QItemSelectionModel::selectionChanged,
             this,
             [this](const QItemSelection& selection, const QItemSelection&)
             {
-                ui_->poistaKoulutusohjelmaButton->setEnabled(!selection.isEmpty());
-                ui_->lisaaOpettajaKoulutusOhjelmaanButton->setEnabled(!selection.isEmpty());
-                ui_->lisaaOppilasKoulutusOhjelmaanButton->setEnabled(!selection.isEmpty());
+                ui_->deleteProgramButton->setEnabled(!selection.isEmpty());
+                ui_->addTeacherToProgramButton->setEnabled(!selection.isEmpty());
+                ui_->addStudentToProgramButton->setEnabled(!selection.isEmpty());
             });
 
-    connect(ui_->koulutusOhjelmanOpettajatListView->selectionModel(),
+    connect(ui_->programsTeachersListView->selectionModel(),
             &QItemSelectionModel::selectionChanged,
             this,
             [this](const QItemSelection& selection, const QItemSelection& deselected)
             {
-                ui_->poistaOpettajaKoulutusOhjelmastaButton->setEnabled(!selection.isEmpty());
+                ui_->removeTeacherFromProgramButton->setEnabled(!selection.isEmpty());
             });
-    connect(ui_->koulutusOhjelmanOppilaatListView->selectionModel(),
+    connect(ui_->programStudentsListView->selectionModel(),
             &QItemSelectionModel::selectionChanged,
             this,
             [this](const QItemSelection& selection, const QItemSelection& deselected)
             {
-                ui_->poistaOppilasKoulutusOhjelmastaButton->setEnabled(!selection.isEmpty());
+                ui_->removeStudentFromProgramButton->setEnabled(!selection.isEmpty());
             });
 
     connect(programTeacherModel_,
@@ -85,25 +85,25 @@ MainWindow::MainWindow(School* school,
             this,
             [this]()
             {
-                ui_->poistaOpettajaKoulutusOhjelmastaButton->setEnabled(false);
+                ui_->removeTeacherFromProgramButton->setEnabled(false);
             });
     connect(programStudentModel_,
             &QAbstractListModel::modelReset,
             this,
             [this]()
             {
-                ui_->poistaOppilasKoulutusOhjelmastaButton->setEnabled(false);
+                ui_->removeStudentFromProgramButton->setEnabled(false);
             });
 
-    connect(ui_->koulutusOhjelmanOpettajatListView->selectionModel(),
+    connect(ui_->programsTeachersListView->selectionModel(),
             &QItemSelectionModel::selectionChanged,
             this,
             [this](const QItemSelection &selection, const QItemSelection deselected)
             {
-                ui_->poistaOpettajaKoulutusOhjelmastaButton->setEnabled(!selection.isEmpty());
+                ui_->removeTeacherFromProgramButton->setEnabled(!selection.isEmpty());
             });
 
-    connect(ui_->koulutusohjelmatListView, &QListView::doubleClicked, this, &MainWindow::onItemDoubleClicked);
+    connect(ui_->programsListView, &QListView::doubleClicked, this, &MainWindow::onItemDoubleClicked);
 
     connect(programModel_, &QAbstractItemModel::rowsInserted, this, &MainWindow::updateProgramCount);
     connect(programModel_, &QAbstractItemModel::rowsRemoved, this, &MainWindow::updateProgramCount);
@@ -114,7 +114,7 @@ MainWindow::MainWindow(School* school,
             {
                 programTeacherModel_->setTeachers(std::vector<AssociationItem>());
                 programStudentModel_->setStudents(std::vector<AssociationItem>());
-                ui_->poistaKoulutusohjelmaButton->setEnabled(false);
+                ui_->deleteProgramButton->setEnabled(false);
                 updateProgramCount();
             });
     updateProgramCount();
@@ -126,11 +126,11 @@ MainWindow::MainWindow(School* school,
             this,
             [this]()
             {
-                ui_->poistaOpettaja->setEnabled(false);
+                ui_->deleteTeacherButton->setEnabled(false);
                 updateOpettajatCount();
             });
 
-    connect(ui_->opettajatListView_2->selectionModel(),
+    connect(ui_->teachersListView->selectionModel(),
             &QItemSelectionModel::currentChanged,
             this,
             [this](const QModelIndex& current, const QModelIndex&)
@@ -139,12 +139,12 @@ MainWindow::MainWindow(School* school,
                 teacherProgramModel_->setPrograms(
                     programTeacherService_.fetchPrograms(teacher.id().toInt()));
             });
-    connect(ui_->opettajatListView_2->selectionModel(),
+    connect(ui_->teachersListView->selectionModel(),
             &QItemSelectionModel::selectionChanged,
             this,
             [this](const QItemSelection& selected, const QItemSelection& deselected)
             {
-                ui_->poistaOpettaja->setEnabled(!selected.isEmpty());
+                ui_->deleteTeacherButton->setEnabled(!selected.isEmpty());
             });
     updateOpettajatCount();
 
@@ -152,29 +152,29 @@ MainWindow::MainWindow(School* school,
             &QAbstractListModel::modelReset,
             this,
             [this](){
-                ui_->poistaOpettajaKoulutusOhjelmastaButton_2->setEnabled(false);
+                ui_->removeTeacherFromProgramButton_2->setEnabled(false);
             });
-    connect(ui_->opettajanKoulutusOhjelmatListView->selectionModel(),
+    connect(ui_->teacherProgramsListView->selectionModel(),
             &QItemSelectionModel::selectionChanged,
             this,
             [this](const QItemSelection& selected, const QItemSelection& deselected){
-                ui_->poistaOpettajaKoulutusOhjelmastaButton_2->setEnabled(!selected.isEmpty());
+                ui_->removeTeacherFromProgramButton_2->setEnabled(!selected.isEmpty());
             });
 
 
-    connect(ui_->lisaaOpettajaKoulutusOhjelmaanButton, &QPushButton::clicked, this, &MainWindow::onAddTeacherToProgramClicked);
-    connect(ui_->poistaOpettajaKoulutusOhjelmastaButton, &QPushButton::clicked, this, &MainWindow::onRemoveTeacherFromProgramClicked);
+    connect(ui_->addTeacherToProgramButton, &QPushButton::clicked, this, &MainWindow::onAddTeacherToProgramClicked);
+    connect(ui_->removeTeacherFromProgramButton, &QPushButton::clicked, this, &MainWindow::onRemoveTeacherFromProgramClicked);
 
-    connect(ui_->lisaaOppilasKoulutusOhjelmaanButton, &QPushButton::clicked, this, &MainWindow::onAddStudentToProgramClicked);
-    connect(ui_->poistaOppilasKoulutusOhjelmastaButton, &QPushButton::clicked, this, &MainWindow::onRemoveStudentFromProgramClicked);
+    connect(ui_->addStudentToProgramButton, &QPushButton::clicked, this, &MainWindow::onAddStudentToProgramClicked);
+    connect(ui_->removeStudentFromProgramButton, &QPushButton::clicked, this, &MainWindow::onRemoveStudentFromProgramClicked);
 
-    connect(ui_->lisaaKoulutusohjelmaButton, &QPushButton::clicked, this, &MainWindow::onAddProgramClicked);
-    connect(ui_->poistaKoulutusohjelmaButton, &QPushButton::clicked, this, &MainWindow::onRemoveProgramClicked);
+    connect(ui_->addProgramButton, &QPushButton::clicked, this, &MainWindow::onAddProgramClicked);
+    connect(ui_->deleteProgramButton, &QPushButton::clicked, this, &MainWindow::onRemoveProgramClicked);
 
-    connect(ui_->lisaaOpettaja, &QPushButton::clicked, this, &MainWindow::onAddTeacherClicked);
-    connect(ui_->poistaOpettaja, &QPushButton::clicked, this, &MainWindow::onRemoveTeacherClicked);
+    connect(ui_->addTeacherButton, &QPushButton::clicked, this, &MainWindow::onAddTeacherClicked);
+    connect(ui_->deleteTeacherButton, &QPushButton::clicked, this, &MainWindow::onRemoveTeacherClicked);
 
-    connect(ui_->poistaOpettajaKoulutusOhjelmastaButton_2, &QPushButton::clicked, this, &MainWindow::onRemoveTeacherFromProgramClicked2);
+    connect(ui_->removeTeacherFromProgramButton_2, &QPushButton::clicked, this, &MainWindow::onRemoveTeacherFromProgramClicked2);
 
 
     programModel_->setPrograms(programService_.fetchPrograms());
@@ -188,8 +188,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::onRemoveTeacherFromProgramClicked2()
 {
-    QItemSelectionModel* selectionModel = ui_->opettajanKoulutusOhjelmatListView->selectionModel();
-    QModelIndex current = ui_->opettajanKoulutusOhjelmatListView->currentIndex();
+    QItemSelectionModel* selectionModel = ui_->teacherProgramsListView->selectionModel();
+    QModelIndex current = ui_->teacherProgramsListView->currentIndex();
     if (!current.isValid())
         return;
     Program program = teacherProgramModel_->programAt(current.row());
@@ -201,7 +201,7 @@ void MainWindow::onRemoveTeacherFromProgramClicked2()
     if (dialog.exec() != QDialog::Accepted)
         return;
 
-    QModelIndex currentTeacher = ui_->opettajatListView_2->currentIndex();
+    QModelIndex currentTeacher = ui_->teachersListView->currentIndex();
     if (!current.isValid())
         return;
     Teacher teacher = teacherModel_->teacherAt(currentTeacher.row());
@@ -226,7 +226,7 @@ void MainWindow::onAddTeacherClicked()
 
 void MainWindow::onRemoveTeacherClicked()
 {
-    QModelIndex current = ui_->opettajatListView_2->currentIndex();
+    QModelIndex current = ui_->teachersListView->currentIndex();
     if (!current.isValid())
         return;
 
@@ -252,8 +252,8 @@ void MainWindow::onAddProgramClicked()
 
 void MainWindow::onRemoveProgramClicked()
 {
-    QItemSelectionModel* selectionModel = ui_->koulutusohjelmatListView->selectionModel();
-    QModelIndex current = ui_->koulutusohjelmatListView->currentIndex();
+    QItemSelectionModel* selectionModel = ui_->programsListView->selectionModel();
+    QModelIndex current = ui_->programsListView->currentIndex();
     if (!current.isValid())
         return;
 
@@ -266,12 +266,12 @@ void MainWindow::onRemoveProgramClicked()
     programService_.removeProgram(program.id().toInt());
     selectionModel->clearSelection();
     programModel_->setPrograms(programService_.fetchPrograms());
-    ui_->lisatiedotLabel->setText(QString());
+    ui_->detailsLabel->setText(QString());
 }
 
 void MainWindow::onAddStudentToProgramClicked()
 {
-    QModelIndex currentKoulutusOhjelma = ui_->koulutusohjelmatListView->currentIndex();
+    QModelIndex currentKoulutusOhjelma = ui_->programsListView->currentIndex();
     if (!currentKoulutusOhjelma.isValid())
         return;
     Program program = programModel_->programAt(currentKoulutusOhjelma.row());
@@ -288,8 +288,8 @@ void MainWindow::onAddStudentToProgramClicked()
 
 void MainWindow::onRemoveStudentFromProgramClicked()
 {
-    QItemSelectionModel* selectionModel = ui_->koulutusOhjelmanOpettajatListView->selectionModel();
-    QModelIndex current = ui_->koulutusOhjelmanOppilaatListView->currentIndex();
+    QItemSelectionModel* selectionModel = ui_->programsTeachersListView->selectionModel();
+    QModelIndex current = ui_->programStudentsListView->currentIndex();
     if (!current.isValid())
         return;
     AssociationItem student = programStudentModel_->studentAt(current.row());
@@ -301,7 +301,7 @@ void MainWindow::onRemoveStudentFromProgramClicked()
     if (dialog.exec() != QDialog::Accepted)
         return;
 
-    QModelIndex currentProgram = ui_->koulutusohjelmatListView->currentIndex();
+    QModelIndex currentProgram = ui_->programsListView->currentIndex();
     if (!current.isValid())
         return;
     Program program = programModel_->programAt(currentProgram.row());
@@ -314,7 +314,7 @@ void MainWindow::onRemoveStudentFromProgramClicked()
 
 void MainWindow::onAddTeacherToProgramClicked()
 {
-    QModelIndex currentProgram = ui_->koulutusohjelmatListView->currentIndex();
+    QModelIndex currentProgram = ui_->programsListView->currentIndex();
     if (!currentProgram.isValid())
         return;
     Program program = programModel_->programAt(currentProgram.row());
@@ -331,8 +331,8 @@ void MainWindow::onAddTeacherToProgramClicked()
 
 void MainWindow::onRemoveTeacherFromProgramClicked()
 {
-    QItemSelectionModel* selectionModel = ui_->koulutusOhjelmanOpettajatListView->selectionModel();
-    QModelIndex current = ui_->koulutusOhjelmanOpettajatListView->currentIndex();
+    QItemSelectionModel* selectionModel = ui_->programsTeachersListView->selectionModel();
+    QModelIndex current = ui_->programsTeachersListView->currentIndex();
     if (!current.isValid())
         return;
     AssociationItem teacher = programTeacherModel_->teacherAt(current.row());
@@ -344,7 +344,7 @@ void MainWindow::onRemoveTeacherFromProgramClicked()
     if (dialog.exec() != QDialog::Accepted)
         return;
 
-    QModelIndex currentProgram = ui_->koulutusohjelmatListView->currentIndex();
+    QModelIndex currentProgram = ui_->programsListView->currentIndex();
     if (!current.isValid())
         return;
     Program program = programModel_->programAt(currentProgram.row());
@@ -370,17 +370,17 @@ void MainWindow::onItemClicked(const QModelIndex& index)
         return;
 
     Program program = programModel_->programAt(index.row());
-    ui_->lisatiedotLabel->setText(program.name());
+    ui_->detailsLabel->setText(program.name());
 }
 
 void MainWindow::updateProgramCount()
 {
     int count = programModel_->rowCount();
-    ui_->koulutusohjelmatCountLabel->setText(QString("Koulutusohjelmien määrä: %1").arg(count));
+    ui_->programsCountLabel->setText(QString("Koulutusohjelmien määrä: %1").arg(count));
 }
 
 void MainWindow::updateOpettajatCount()
 {
     int count = teacherModel_->rowCount();
-    ui_->opettajienMaaraLabel->setText(QString("Opettajien määrä: %1").arg(count));
+    ui_->teacherCountLabel->setText(QString("Opettajien määrä: %1").arg(count));
 }

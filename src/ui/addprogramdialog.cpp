@@ -18,7 +18,7 @@ AddProgramDialog::~AddProgramDialog()
 
 void AddProgramDialog::onAddClicked()
 {
-    QString name = ui->nimiLineEdit->text().trimmed();
+    QString name = ui->nameLineEdit->text().trimmed();
     if (name.isEmpty())
     {
         QMessageBox::warning(
@@ -36,7 +36,7 @@ Program AddProgramDialog::program() const
 {
     return Program(
         "",
-        ui->nimiLineEdit->text().trimmed()
+        ui->nameLineEdit->text().trimmed()
     );
 }
 

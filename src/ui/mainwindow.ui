@@ -30,23 +30,23 @@
       <property name="currentIndex">
        <number>1</number>
       </property>
-      <widget class="QWidget" name="koulutusOhjelmatTab">
+      <widget class="QWidget" name="programsTab">
        <attribute name="title">
         <string>Koulutusohjelmat</string>
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
-         <widget class="QWidget" name="koulutusohjelmatWidget" native="true">
+         <widget class="QWidget" name="programsWidget" native="true">
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
-            <widget class="QLabel" name="koulutusohjelmatCountLabel">
+            <widget class="QLabel" name="programsCountLabel">
              <property name="text">
               <string>Koulutusohjelmien määrä: 0</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QListView" name="koulutusohjelmatListView">
+            <widget class="QListView" name="programsListView">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                <horstretch>0</horstretch>
@@ -65,17 +65,17 @@
             </widget>
            </item>
            <item>
-            <widget class="QWidget" name="koulutusohjelmatButtonswidget" native="true">
+            <widget class="QWidget" name="programsButtonsWidget" native="true">
              <layout class="QHBoxLayout" name="horizontalLayout">
               <item>
-               <widget class="QPushButton" name="lisaaKoulutusohjelmaButton">
+               <widget class="QPushButton" name="addProgramButton">
                 <property name="text">
                  <string>Lisää</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="poistaKoulutusohjelmaButton">
+               <widget class="QPushButton" name="deleteProgramButton">
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
@@ -91,7 +91,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QWidget" name="lisatiedotWidget" native="true">
+         <widget class="QWidget" name="detailsWidget" native="true">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -100,7 +100,7 @@
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_4">
            <item>
-            <widget class="QLabel" name="lisatiedotLabel">
+            <widget class="QLabel" name="detailsLabel">
              <property name="font">
               <font>
                <bold>true</bold>
@@ -115,7 +115,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QGroupBox" name="lisatiedotGroupBox">
+            <widget class="QGroupBox" name="detailsGroupBox">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                <horstretch>0</horstretch>
@@ -127,19 +127,19 @@
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_2">
               <item>
-               <widget class="QGroupBox" name="opettajatGroupBox">
+               <widget class="QGroupBox" name="programTeachersGroupBox">
                 <property name="title">
                  <string>Opettajat</string>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout">
                  <item>
-                  <widget class="QListView" name="koulutusOhjelmanOpettajatListView"/>
+                  <widget class="QListView" name="programsTeachersListView"/>
                  </item>
                  <item>
-                  <widget class="QWidget" name="widget" native="true">
+                  <widget class="QWidget" name="programTeachersButtonsWidget" native="true">
                    <layout class="QHBoxLayout" name="horizontalLayout_4">
                     <item>
-                     <widget class="QPushButton" name="lisaaOpettajaKoulutusOhjelmaanButton">
+                     <widget class="QPushButton" name="addTeacherToProgramButton">
                       <property name="enabled">
                        <bool>false</bool>
                       </property>
@@ -149,7 +149,7 @@
                      </widget>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="poistaOpettajaKoulutusOhjelmastaButton">
+                     <widget class="QPushButton" name="removeTeacherFromProgramButton">
                       <property name="enabled">
                        <bool>false</bool>
                       </property>
@@ -165,19 +165,19 @@
                </widget>
               </item>
               <item>
-               <widget class="QGroupBox" name="oppilaatGroupBox">
+               <widget class="QGroupBox" name="programStudentsGroupBox">
                 <property name="title">
                  <string>Oppilaat</string>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_5">
                  <item>
-                  <widget class="QListView" name="koulutusOhjelmanOppilaatListView"/>
+                  <widget class="QListView" name="programStudentsListView"/>
                  </item>
                  <item>
-                  <widget class="QWidget" name="widget_2" native="true">
+                  <widget class="QWidget" name="programStudentsButtonsWidget" native="true">
                    <layout class="QHBoxLayout" name="horizontalLayout_5">
                     <item>
-                     <widget class="QPushButton" name="lisaaOppilasKoulutusOhjelmaanButton">
+                     <widget class="QPushButton" name="addStudentToProgramButton">
                       <property name="enabled">
                        <bool>false</bool>
                       </property>
@@ -187,7 +187,7 @@
                      </widget>
                     </item>
                     <item>
-                     <widget class="QPushButton" name="poistaOppilasKoulutusOhjelmastaButton">
+                     <widget class="QPushButton" name="removeStudentFromProgramButton">
                       <property name="enabled">
                        <bool>false</bool>
                       </property>
@@ -210,35 +210,35 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="opettajatTab">
+      <widget class="QWidget" name="teachersTab">
        <attribute name="title">
         <string>Opettajat</string>
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout_6">
         <item>
-         <widget class="QWidget" name="OpettajatWidget" native="true">
+         <widget class="QWidget" name="teachersWidget" native="true">
           <layout class="QVBoxLayout" name="verticalLayout_6">
            <item>
-            <widget class="QLabel" name="opettajienMaaraLabel">
+            <widget class="QLabel" name="teacherCountLabel">
              <property name="text">
               <string>Opettajien määrä:</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QListView" name="opettajatListView_2"/>
+            <widget class="QListView" name="teachersListView"/>
            </item>
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_7">
              <item>
-              <widget class="QPushButton" name="lisaaOpettaja">
+              <widget class="QPushButton" name="addTeacherButton">
                <property name="text">
                 <string>Lisää opettaja</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="poistaOpettaja">
+              <widget class="QPushButton" name="deleteTeacherButton">
                <property name="text">
                 <string>Poista opettaja</string>
                </property>
@@ -250,20 +250,20 @@
          </widget>
         </item>
         <item>
-         <widget class="QWidget" name="opettajanKoulutusOhjelmatWidget" native="true">
+         <widget class="QWidget" name="teacherProgramsWidget" native="true">
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
-            <widget class="QLabel" name="opettajanKoulutusOhjelmatLabel">
+            <widget class="QLabel" name="teacherProgramsLabel">
              <property name="text">
               <string>Opettajan koulutusohjelmat</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QListView" name="opettajanKoulutusOhjelmatListView"/>
+            <widget class="QListView" name="teacherProgramsListView"/>
            </item>
            <item>
-            <widget class="QPushButton" name="poistaOpettajaKoulutusOhjelmastaButton_2">
+            <widget class="QPushButton" name="removeTeacherFromProgramButton_2">
              <property name="text">
               <string>Poista Koulutusohjelmasta</string>
              </property>

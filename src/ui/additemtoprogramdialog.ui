@@ -33,7 +33,7 @@
    <item>
     <layout class="QGridLayout" name="gridLayout">
      <item row="1" column="0">
-      <widget class="QListView" name="lisattavatListView">
+      <widget class="QListView" name="availableListView">
        <property name="acceptDrops">
         <bool>true</bool>
        </property>
@@ -55,14 +55,14 @@
       </widget>
      </item>
      <item row="0" column="0">
-      <widget class="QLabel" name="lisattavatLabel">
+      <widget class="QLabel" name="availableLabel">
        <property name="text">
         <string>Opettajat</string>
        </property>
       </widget>
      </item>
      <item row="1" column="2">
-      <widget class="QListView" name="lisatytListView">
+      <widget class="QListView" name="assignedListView">
        <property name="acceptDrops">
         <bool>true</bool>
        </property>
@@ -84,7 +84,7 @@
       </widget>
      </item>
      <item row="0" column="2">
-      <widget class="QLabel" name="lisatytLabel">
+      <widget class="QLabel" name="assignedLabel">
        <property name="text">
         <string>Koulutusohjelman opettajat</string>
        </property>
@@ -93,14 +93,14 @@
      <item row="1" column="1">
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QPushButton" name="lisaaButton">
+        <widget class="QPushButton" name="assignButton">
          <property name="text">
           <string>Lisää</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="poistaButton">
+        <widget class="QPushButton" name="removeButton">
          <property name="text">
           <string>Poista</string>
          </property>
@@ -165,7 +165,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>lisaaButton</sender>
+   <sender>assignButton</sender>
    <signal>clicked()</signal>
    <receiver>AddItemToProgramDialog</receiver>
    <slot>onAddClicked()</slot>
@@ -181,7 +181,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>poistaButton</sender>
+   <sender>removeButton</sender>
    <signal>clicked()</signal>
    <receiver>AddItemToProgramDialog</receiver>
    <slot>onRemoveClicked()</slot>

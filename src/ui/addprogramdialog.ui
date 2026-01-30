@@ -33,7 +33,7 @@
    <item>
     <layout class="QFormLayout" name="formLayout">
      <item row="0" column="1">
-      <widget class="QLineEdit" name="nimiLineEdit">
+      <widget class="QLineEdit" name="nameLineEdit">
        <property name="toolTip">
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nimi&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
@@ -46,17 +46,17 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="kuvausLineEdit"/>
+      <widget class="QLineEdit" name="descriptionLineEdit"/>
      </item>
      <item row="0" column="0">
-      <widget class="QLabel" name="nimiLabel">
+      <widget class="QLabel" name="nameLabel">
        <property name="text">
         <string>Nimi</string>
        </property>
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="kuvausLabel">
+      <widget class="QLabel" name="descriptionLabel">
        <property name="text">
         <string>Kuvaus</string>
        </property>

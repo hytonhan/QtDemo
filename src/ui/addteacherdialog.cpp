@@ -18,7 +18,7 @@ AddTeacherDialog::~AddTeacherDialog()
 
 void AddTeacherDialog::onAddClicked()
 {
-    QString firstName = ui->etunimiLineEdit->text().trimmed();
+    QString firstName = ui->firstNameLineEdit->text().trimmed();
     if (firstName.isEmpty())
     {
         QMessageBox::warning(
@@ -28,7 +28,7 @@ void AddTeacherDialog::onAddClicked()
             );
         return;
     }
-    QString lastName = ui->sukunimiLineEdit->text().trimmed();
+    QString lastName = ui->lastNameLineEdit->text().trimmed();
     if (lastName.isEmpty())
     {
         QMessageBox::warning(
@@ -38,7 +38,7 @@ void AddTeacherDialog::onAddClicked()
             );
         return;
     }
-    QString field = ui->alaLineEdit->text().trimmed();
+    QString field = ui->fieldLineEdit->text().trimmed();
     if (field.isEmpty())
     {
         QMessageBox::warning(
@@ -48,7 +48,7 @@ void AddTeacherDialog::onAddClicked()
             );
         return;
     }
-    QString salary = ui->palkkaLineEdit->text().trimmed();
+    QString salary = ui->salaryLineEdit->text().trimmed();
     if (salary.isEmpty())
     {
         QMessageBox::warning(
@@ -58,8 +58,8 @@ void AddTeacherDialog::onAddClicked()
             );
         return;
     }
-    QString address = ui->osoiteLineEdit->text().trimmed();
-    QString phone = ui->puhelinLineEdit->text().trimmed();
+    QString address = ui->addressLineEdit->text().trimmed();
+    QString phone = ui->phoneLineEdit->text().trimmed();
 
     accept();
 }
@@ -67,11 +67,11 @@ void AddTeacherDialog::onAddClicked()
 Teacher AddTeacherDialog::teacher() const
 {
     return Teacher(
-        ui->etunimiLineEdit->text().trimmed(),
-        ui->sukunimiLineEdit->text().trimmed(),
-        ui->osoiteLineEdit->text().trimmed(),
-        ui->puhelinLineEdit->text().trimmed(),
+        ui->firstNameLineEdit->text().trimmed(),
+        ui->lastNameLineEdit->text().trimmed(),
+        ui->addressLineEdit->text().trimmed(),
+        ui->phoneLineEdit->text().trimmed(),
         QString(),
-        ui->palkkaLineEdit->text().trimmed().toFloat(),
-        ui->alaLineEdit->text().trimmed());
+        ui->salaryLineEdit->text().trimmed().toFloat(),
+        ui->fieldLineEdit->text().trimmed());
 }

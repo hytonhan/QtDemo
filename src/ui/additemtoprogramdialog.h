@@ -28,8 +28,6 @@ private slots:
     void onAddClicked();
     void onRemoveClicked();
 private:
-    void refresh();
-
     std::vector<int> originalIds_;
     Ui::AddItemToProgramDialog *ui_;
     const Program& program_;
