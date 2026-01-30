@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
     School school = schoolRepo.getSchool();
 
     MainWindow w(
-        &school,
+        school,
         programService,
         teacherService,
         programTeacherService,

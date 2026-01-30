@@ -16,8 +16,8 @@ AddItemToProgramDialog::AddItemToProgramDialog(
     availableModel_ = new ProgramAssociationItemListModel(this);
     assignedModel_ = new ProgramAssociationItemListModel(this);
 
-    ui_->lisattavatListView->setModel(availableModel_);
-    ui_->lisatytListView->setModel(assignedModel_);
+    ui_->availableListView ->setModel(availableModel_);
+    ui_->assignedListView->setModel(assignedModel_);
 
     auto available = associationService_.fetchAvailable(program_.id().toInt());
     auto assigned = associationService_.fetchAssigned(program_.id().toInt());
@@ -57,7 +57,7 @@ void AddItemToProgramDialog::onAddButtonClicked()
 
 void AddItemToProgramDialog::onAddClicked()
 {
-    QModelIndex index = ui_->lisattavatListView->currentIndex();
+    QModelIndex index = ui_->availableListView->currentIndex();
     if (!index.isValid())
         return;
 
@@ -66,7 +66,7 @@ void AddItemToProgramDialog::onAddClicked()
 
 void AddItemToProgramDialog::onRemoveClicked()
 {
-    QModelIndex index = ui_->lisatytListView->currentIndex();
+    QModelIndex index = ui_->assignedListView->currentIndex();
     if (!index.isValid())
         return;
 

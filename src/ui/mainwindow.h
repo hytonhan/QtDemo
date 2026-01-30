@@ -26,7 +26,7 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(
-        School* school,
+        School& school,
         ProgramService& programService,
         TeacherService& teacherService,
         ProgramTeacherAssociationService& programTeacherService,
@@ -34,7 +34,7 @@ public:
         QWidget* parent = nullptr);
     ~MainWindow();
 private:
-    School* school_;
+    School& school_;
     Ui::MainWindow* ui_;
 
     ProgramListModel* programModel_;
