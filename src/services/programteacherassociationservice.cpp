@@ -46,12 +46,12 @@ std::vector<Program> ProgramTeacherAssociationService::fetchPrograms(int teacher
     return result;
 }
 
-void ProgramTeacherAssociationService::link(int programId, int teacherId) const
+void ProgramTeacherAssociationService::link(int programId, int teacherId)
 {
     repo_.assignTeacher(programId, teacherId);
 }
 
-void ProgramTeacherAssociationService::unlink(int programId, int teacherId) const
+void ProgramTeacherAssociationService::unlink(int programId, int teacherId)
 {
     repo_.removeTeacher(programId, teacherId);
 }

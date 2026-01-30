@@ -13,8 +13,8 @@ public:
     std::vector<AssociationItem> fetchAssigned(int programId) const override;
     std::vector<Program> fetchPrograms(int teacherId) const override;
 
-    void link(int programId, int teacherId) const override;
-    void unlink(int programId, int teacherId) const override;
+    void link(int programId, int teacherId) override;
+    void unlink(int programId, int teacherId) override;
 
 private:
     ProgramTeacherRepository& repo_;

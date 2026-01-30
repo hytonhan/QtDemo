@@ -3,27 +3,29 @@
 #include <QSqlError>
 
 SchoolRepository::SchoolRepository(const QSqlDatabase& db)
+    : db_(db)
 {}
 
-School SchoolRepository::getSchool() const
+std::optional<School> SchoolRepository::getSchool(int id) const
 {
-    School school;
     QSqlQuery query(db_);
-    if (!query.prepare("SELECT id, name FROM school WHERE id = 1"))
+    if (!query.prepare("SELECT id, name FROM school WHERE id = :id"))
     {
-        qCritical() << "Query preparation failed";
-        return school;
+        qCritical() << "Failed to prepare school query:";
+        return std::nullopt;
     }
+    query.bindValue(":id", id);
     if (!query.exec()) {
-        qCritical() << "Failed to get School:" << query.lastError().text();
-        return school;
+        qCritical() << "Failed to execute school query:" << query.lastError().text();
+        return std::nullopt;
     }
-    if (query.next()) {
-        return School(query.value("id").toString(),
-                      query.value("name").toString());
-    } else {
-        qWarning() << "No School found with id = 1";
+    if (!query.next()) {
+        qWarning() << "No school found with id =" << id;
+        return std::nullopt;
     }
 
-    return school;
+    return School(
+        query.value("id").toString(),
+        query.value("name").toString()
+        );
 }

@@ -12,7 +12,7 @@
 #include "../services/programteacherassociationservice.h"
 #include "../services/programstudentassociationservice.h"
 
-MainWindow::MainWindow(School& school,
+MainWindow::MainWindow(const School& school,
                        ProgramService& programService,
                        TeacherService& teacherService,
                        ProgramTeacherAssociationService& programTeacherService,

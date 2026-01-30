@@ -22,8 +22,8 @@ public:
 
     virtual std::vector<Program> fetchPrograms(int entityId) const = 0;
 
-    virtual void link(int programId, int entityId) const = 0;
-    virtual void unlink(int programId, int entityId) const = 0;
+    virtual void link(int programId, int entityId) = 0;
+    virtual void unlink(int programId, int entityId) = 0;
 };
 
 #endif // PROGRAMASSOCIATIONSERVICE_H

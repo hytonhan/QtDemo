@@ -7,15 +7,14 @@
 class ProgramStudentAssociationService : public ProgramAssociationService
 {
 public:
-    explicit ProgramStudentAssociationService(
-        ProgramStudentRepository& repo);
+    explicit ProgramStudentAssociationService(ProgramStudentRepository& repo);
 
     std::vector<AssociationItem> fetchAvailable(int programId) const override;
     std::vector<AssociationItem> fetchAssigned(int programId) const override;
     std::vector<Program> fetchPrograms(int studentId) const override;
 
-    void link(int programId, int studentId) const override;
-    void unlink(int programId, int studentId) const override;
+    void link(int programId, int studentId) override;
+    void unlink(int programId, int studentId) override;
 
 private:
     ProgramStudentRepository& repo_;

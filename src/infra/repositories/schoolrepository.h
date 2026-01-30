@@ -9,7 +9,7 @@ class SchoolRepository
 public:
     explicit SchoolRepository(const QSqlDatabase& db);
 
-    School getSchool() const;
+    std::optional<School> getSchool(int id) const;
 private:
     QSqlDatabase db_;
 };

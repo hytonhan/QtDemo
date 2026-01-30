@@ -10,6 +10,7 @@
 #include "infra/databaseservice.h"
 #include <QApplication>
 #include "infra/repositories/schoolrepository.h"
+#include <QMessageBox>
 
 int main(int argc, char *argv[])
 {
@@ -23,7 +24,7 @@ int main(int argc, char *argv[])
         return -1;
     if (!dbService.populateInitialData())
         return -1;
-    QSqlDatabase db = dbService.database();
+    const QSqlDatabase db = dbService.database();
 
     SchoolRepository schoolRepo(db);
     ProgramRepository programRepo(db);
@@ -36,7 +37,17 @@ int main(int argc, char *argv[])
     ProgramTeacherAssociationService programTeacherService(programTeacherRepo);
     ProgramStudentAssociationService programStudentService(programStudentRepo);
 
-    School school = schoolRepo.getSchool();
+    constexpr int DefaultSchoolId = 1;
+    auto schoolOpt = schoolRepo.getSchool(DefaultSchoolId);
+    if (!schoolOpt) {
+        qCritical() << "Unable to load school";
+        QMessageBox::critical(nullptr,
+                              QObject::tr("Startup Error"),
+                              QObject::tr("The application could not load required data."));
+
+        return EXIT_FAILURE;
+    }
+    const School& school = *schoolOpt;
 
     MainWindow w(
         school,
