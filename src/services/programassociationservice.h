@@ -17,13 +17,13 @@ class ProgramAssociationService
 public:
     virtual ~ProgramAssociationService() = default;
 
-    virtual std::vector<AssociationItem> fetchAvailable(int programId) = 0;
-    virtual std::vector<AssociationItem> fetchAssigned(int programId) = 0;
+    virtual std::vector<AssociationItem> fetchAvailable(int programId) const = 0;
+    virtual std::vector<AssociationItem> fetchAssigned(int programId) const = 0;
 
-    virtual std::vector<Program> fetchPrograms(int entityId) = 0;
+    virtual std::vector<Program> fetchPrograms(int entityId) const = 0;
 
-    virtual void link(int programId, int entityId) = 0;
-    virtual void unlink(int programId, int entityId) = 0;
+    virtual void link(int programId, int entityId) const = 0;
+    virtual void unlink(int programId, int entityId) const = 0;
 };
 
 #endif // PROGRAMASSOCIATIONSERVICE_H

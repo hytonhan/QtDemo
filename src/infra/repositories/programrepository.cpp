@@ -5,14 +5,14 @@
 #include <QString>
 #include "../databaseservice.h"
 
-ProgramRepository::ProgramRepository(QSqlDatabase db)
+ProgramRepository::ProgramRepository(const QSqlDatabase& db)
 {
 }
 
 bool ProgramRepository::insertProgram(int schoolId, const Program& program)
 {
     QSqlQuery query(db_);
-    QString queryString = DatabaseService::loadSql(":/sql/sql/insert_program.sql");
+    const QString queryString = DatabaseService::loadSql(":/sql/sql/insert_program.sql");
     if (queryString.isEmpty()) {
         qCritical() << "Couldn't sql command file or it was empty.";
         return false;
@@ -35,7 +35,7 @@ std::vector<Program> ProgramRepository::getPrograms() const
 {
     std::vector<Program> programs;
     QSqlQuery query(db_);
-    QString queryString = DatabaseService::loadSql(":/sql/sql/fetch_programs.sql");
+    const QString queryString = DatabaseService::loadSql(":/sql/sql/fetch_programs.sql");
     if (queryString.isEmpty()) {
         qCritical() << "Fetch command was empty or not found";
         return std::vector<Program>();
@@ -58,7 +58,7 @@ std::vector<Program> ProgramRepository::getPrograms() const
 bool ProgramRepository::deleteProgram(int programId)
 {
     QSqlQuery query(db_);
-    QString queryString = DatabaseService::loadSql(":/sql/sql/delete_program.sql");
+    const QString queryString = DatabaseService::loadSql(":/sql/sql/delete_program.sql");
     if (queryString.isEmpty()) {
         qCritical() << "Delete command was empty or not found";
         return false;

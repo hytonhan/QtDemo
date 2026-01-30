@@ -4,7 +4,7 @@ ProgramTeacherAssociationService::ProgramTeacherAssociationService(ProgramTeache
     : repo_(repo)
 {}
 
-std::vector<AssociationItem> ProgramTeacherAssociationService::fetchAvailable(int programId)
+std::vector<AssociationItem> ProgramTeacherAssociationService::fetchAvailable(int programId) const
 {
     auto teachers = repo_.teachersNotInProgram(programId);
     std::vector<AssociationItem> result;
@@ -18,7 +18,7 @@ std::vector<AssociationItem> ProgramTeacherAssociationService::fetchAvailable(in
     return result;
 }
 
-std::vector<AssociationItem> ProgramTeacherAssociationService::fetchAssigned(int programId)
+std::vector<AssociationItem> ProgramTeacherAssociationService::fetchAssigned(int programId) const
 {
     auto teachers = repo_.teachersForProgram(programId);
     std::vector<AssociationItem> result;
@@ -32,7 +32,7 @@ std::vector<AssociationItem> ProgramTeacherAssociationService::fetchAssigned(int
     return result;
 }
 
-std::vector<Program> ProgramTeacherAssociationService::fetchPrograms(int teacherId)
+std::vector<Program> ProgramTeacherAssociationService::fetchPrograms(int teacherId) const
 {
     auto programs = repo_.programsForTeacher(teacherId);
     std::vector<Program> result;
@@ -46,10 +46,12 @@ std::vector<Program> ProgramTeacherAssociationService::fetchPrograms(int teacher
     return result;
 }
 
-void ProgramTeacherAssociationService::link(int programId, int teacherId) {
+void ProgramTeacherAssociationService::link(int programId, int teacherId) const
+{
     repo_.assignTeacher(programId, teacherId);
 }
 
-void ProgramTeacherAssociationService::unlink(int programId, int teacherId) {
+void ProgramTeacherAssociationService::unlink(int programId, int teacherId) const
+{
     repo_.removeTeacher(programId, teacherId);
 }

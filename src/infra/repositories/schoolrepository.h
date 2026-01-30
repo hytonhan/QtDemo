@@ -7,7 +7,7 @@
 class SchoolRepository
 {
 public:
-    explicit SchoolRepository(QSqlDatabase db);
+    explicit SchoolRepository(const QSqlDatabase& db);
 
     School getSchool() const;
 private:

@@ -5,7 +5,7 @@
 #include "../databaseservice.h"
 #include "studentrepository.h"
 
-StudentRepository::StudentRepository(QSqlDatabase db) {}
+StudentRepository::StudentRepository(const QSqlDatabase& db) {}
 
 bool StudentRepository::insertStudent(const Student& student)
 {

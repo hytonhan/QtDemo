@@ -11,7 +11,7 @@
 class ProgramRepository
 {
 public:
-    explicit ProgramRepository(QSqlDatabase db);
+    explicit ProgramRepository(const QSqlDatabase& db);
     virtual ~ProgramRepository() = default;
 
     virtual bool insertProgram(int schoolId, const Program& program);

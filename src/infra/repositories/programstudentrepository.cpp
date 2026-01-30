@@ -3,12 +3,12 @@
 #include <QSqlError>
 #include "../../infra/databaseservice.h"
 
-ProgramStudentRepository::ProgramStudentRepository(QSqlDatabase db) {}
+ProgramStudentRepository::ProgramStudentRepository(const QSqlDatabase& db) {}
 
-std::vector<Student> ProgramStudentRepository::studentsForProgram(int programId)
+std::vector<Student> ProgramStudentRepository::studentsForProgram(int programId) const
 {
     QSqlQuery query(db_);
-    QString queryString = DatabaseService::loadSql(":/sql/sql/fetch_programstudents.sql");
+    const QString queryString = DatabaseService::loadSql(":/sql/sql/fetch_programstudents.sql");
     if (queryString.isEmpty()) {
         qCritical() << "Couldn't sql command file or it was empty.";
         return std::vector<Student>();
@@ -33,10 +33,10 @@ std::vector<Student> ProgramStudentRepository::studentsForProgram(int programId)
     return students;
 }
 
-std::vector<Student> ProgramStudentRepository::studentsNotInProgram(int programId)
+std::vector<Student> ProgramStudentRepository::studentsNotInProgram(int programId) const
 {
     QSqlQuery query(db_);
-    QString queryString = DatabaseService::loadSql(":/sql/sql/fetch_studentsnotinprogram.sql");
+    const QString queryString = DatabaseService::loadSql(":/sql/sql/fetch_studentsnotinprogram.sql");
     if (queryString.isEmpty()) {
         qCritical() << "Couldn't sql command file or it was empty.";
         return std::vector<Student>();
@@ -62,10 +62,10 @@ std::vector<Student> ProgramStudentRepository::studentsNotInProgram(int programI
     return students;
 }
 
-std::vector<Program> ProgramStudentRepository::programsForStudent(int studentId)
+std::vector<Program> ProgramStudentRepository::programsForStudent(int studentId) const
 {
     QSqlQuery query(db_);
-    QString queryString = DatabaseService::loadSql(":/sql/sql/fetch_studentprograms.sql");
+    const QString queryString = DatabaseService::loadSql(":/sql/sql/fetch_studentprograms.sql");
     if (queryString.isEmpty()) {
         qCritical() << "Couldn't sql command file or it was empty.";
         return std::vector<Program>();
@@ -89,7 +89,7 @@ std::vector<Program> ProgramStudentRepository::programsForStudent(int studentId)
 void ProgramStudentRepository::assignStudent(int programId, int studentId)
 {
     QSqlQuery query(db_);
-    QString queryString = DatabaseService::loadSql(":/sql/sql/link_programstudent.sql");
+    const QString queryString = DatabaseService::loadSql(":/sql/sql/link_programstudent.sql");
     if (queryString.isEmpty()) {
         qCritical() << "Couldn't sql command file or it was empty.";
         return;
@@ -109,7 +109,7 @@ void ProgramStudentRepository::assignStudent(int programId, int studentId)
 void ProgramStudentRepository::removeStudent(int programId, int studentId)
 {
     QSqlQuery query(db_);
-    QString queryString = DatabaseService::loadSql(":/sql/sql/unlink_programstudent.sql");
+    const QString queryString = DatabaseService::loadSql(":/sql/sql/unlink_programstudent.sql");
     if (queryString.isEmpty()) {
         qCritical() << "Couldn't sql command file or it was empty.";
         return;

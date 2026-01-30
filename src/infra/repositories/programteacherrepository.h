@@ -11,11 +11,11 @@
 class ProgramTeacherRepository
 {
 public:
-    explicit ProgramTeacherRepository(QSqlDatabase db);
+    explicit ProgramTeacherRepository(const QSqlDatabase& db);
     virtual ~ProgramTeacherRepository() = default;
-    virtual std::vector<Teacher> teachersForProgram(int programId);
-    virtual std::vector<Teacher> teachersNotInProgram(int programId);
-    virtual std::vector<Program> programsForTeacher(int teacherId);
+    virtual std::vector<Teacher> teachersForProgram(int programId) const;
+    virtual std::vector<Teacher> teachersNotInProgram(int programId) const;
+    virtual std::vector<Program> programsForTeacher(int teacherId) const;
 
     virtual void assignTeacher(int programId, int teacherId);
     virtual void removeTeacher(int programId, int teacherId);

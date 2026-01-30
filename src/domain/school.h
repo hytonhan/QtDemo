@@ -7,7 +7,8 @@ class School
 {
 public:
     School();
-    School(QString id, QString name);
+    School(const QString& id,
+           const QString& name);
 
     const QString& name() const { return name_;};
     const QString& id() const {return id_;};

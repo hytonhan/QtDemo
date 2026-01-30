@@ -5,7 +5,7 @@
 #include "../databaseservice.h"
 #include "teacherrepository.h"
 
-TeacherRepository::TeacherRepository(QSqlDatabase db)
+TeacherRepository::TeacherRepository(const QSqlDatabase& db)
 {}
 
 bool TeacherRepository::insertTeacher(const Teacher& teacher)

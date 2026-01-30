@@ -10,7 +10,13 @@ class Teacher:
 protected:
     QString field_;
 public:
-    Teacher(QString firstName, QString lastName, QString address, QString phoneNumber, QString id, float salary, QString field);
+    Teacher(const QString& firstName,
+            const QString& lastName,
+            const QString& address,
+            const QString& phoneNumber,
+            const QString& id,
+            const float salary,
+            const QString& field);
 
     QString field() const { return field_; }
 };

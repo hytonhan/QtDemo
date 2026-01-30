@@ -7,7 +7,11 @@ class Student :
     public Person
 {
 public:
-    Student(QString firstName, QString lastName, QString address, QString phoneNumber, QString id);
+    Student(const QString& firstName,
+            const QString& lastName,
+            const QString& address,
+            const QString& phoneNumber,
+            const QString& id);
 };
 
 #endif // STUDENT_H

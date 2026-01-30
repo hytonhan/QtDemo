@@ -11,7 +11,7 @@
 class StudentRepository
 {
 public:
-    explicit StudentRepository(QSqlDatabase db);
+    explicit StudentRepository(const QSqlDatabase& db);
 
     bool insertStudent(const Student& student);
     std::vector<Student> getStudents() const;

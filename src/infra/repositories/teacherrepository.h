@@ -11,7 +11,7 @@
 class TeacherRepository
 {
 public:
-    explicit TeacherRepository(QSqlDatabase db);
+    explicit TeacherRepository(const QSqlDatabase& db);
     virtual ~TeacherRepository() = default;
 
     virtual bool insertTeacher(const Teacher& teacher);

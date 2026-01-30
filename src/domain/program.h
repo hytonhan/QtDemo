@@ -8,7 +8,8 @@ private:
     QString id_;
     QString name_;
 public:
-    Program(QString id, QString name);
+    Program(const QString& id,
+            const QString& name);
 
     const QString& name() const { return name_;};
     const QString& id() const {return id_;};

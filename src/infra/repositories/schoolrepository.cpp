@@ -2,7 +2,7 @@
 #include <QSqlQuery>
 #include <QSqlError>
 
-SchoolRepository::SchoolRepository(QSqlDatabase db)
+SchoolRepository::SchoolRepository(const QSqlDatabase& db)
 {}
 
 School SchoolRepository::getSchool() const
@@ -19,8 +19,8 @@ School SchoolRepository::getSchool() const
         return school;
     }
     if (query.next()) {
-        return School(QString(query.value("id").toString()),
-                      QString(query.value("name").toString()));
+        return School(query.value("id").toString(),
+                      query.value("name").toString());
     } else {
         qWarning() << "No School found with id = 1";
     }

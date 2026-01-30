@@ -9,7 +9,12 @@ class Worker :
 protected:
     float salary_;
 public:
-    Worker(QString firstName, QString lastName, QString address, QString phoneNumber, QString id, float salary);
+    Worker(const QString& firstName,
+           const QString& lastName,
+           const QString& address,
+           const QString& phoneNumber,
+           const QString& id,
+           const float salary);
 
     float salary() const { return salary_; }
 };

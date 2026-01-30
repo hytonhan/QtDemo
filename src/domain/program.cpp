@@ -1,6 +1,7 @@
 #include "program.h"
 
-Program::Program(QString id, QString name)
-    : id_(std::move(id))
-    , name_(std::move(name))
+Program::Program(const QString& id,
+                 const QString& name)
+    : id_(id)
+    , name_(name)
 { }
