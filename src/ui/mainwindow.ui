@@ -291,5 +291,161 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>addTeacherToProgramButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onAddTeacherToProgramClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>405</x>
+     <y>399</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>401</x>
+     <y>462</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>removeTeacherFromProgramButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onRemoveTeacherFromProgramClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>519</x>
+     <y>393</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>519</x>
+     <y>463</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addStudentToProgramButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onAddStudentToProgramClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>670</x>
+     <y>387</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>669</x>
+     <y>466</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>removeStudentFromProgramButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onRemoveStudentFromProgramClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>776</x>
+     <y>387</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>787</x>
+     <y>464</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addProgramButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onAddProgramClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>74</x>
+     <y>415</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>73</x>
+     <y>466</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>deleteProgramButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onRemoveProgramClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>197</x>
+     <y>416</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>156</x>
+     <y>466</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addTeacherButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onAddTeacherClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>70</x>
+     <y>423</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>257</x>
+     <y>53</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>deleteTeacherButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onRemoveTeacherClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>366</x>
+     <y>428</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>439</x>
+     <y>52</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>removeTeacherFromProgramButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>onRemoveTeacherFromProgramClicked2()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>547</x>
+     <y>423</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>675</x>
+     <y>51</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onAddTeacherToProgramClicked()</slot>
+  <slot>onRemoveTeacherFromProgramClicked()</slot>
+  <slot>onAddStudentToProgramClicked()</slot>
+  <slot>onRemoveStudentFromProgramClicked()</slot>
+  <slot>onAddProgramClicked()</slot>
+  <slot>onRemoveProgramClicked()</slot>
+  <slot>onAddTeacherClicked()</slot>
+  <slot>onRemoveTeacherClicked()</slot>
+  <slot>onRemoveTeacherFromProgramClicked2()</slot>
+ </slots>
 </ui>

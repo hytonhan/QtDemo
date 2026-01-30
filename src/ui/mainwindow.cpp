@@ -161,22 +161,6 @@ MainWindow::MainWindow(School& school,
                 ui_->removeTeacherFromProgramButton_2->setEnabled(!selected.isEmpty());
             });
 
-
-    connect(ui_->addTeacherToProgramButton, &QPushButton::clicked, this, &MainWindow::onAddTeacherToProgramClicked);
-    connect(ui_->removeTeacherFromProgramButton, &QPushButton::clicked, this, &MainWindow::onRemoveTeacherFromProgramClicked);
-
-    connect(ui_->addStudentToProgramButton, &QPushButton::clicked, this, &MainWindow::onAddStudentToProgramClicked);
-    connect(ui_->removeStudentFromProgramButton, &QPushButton::clicked, this, &MainWindow::onRemoveStudentFromProgramClicked);
-
-    connect(ui_->addProgramButton, &QPushButton::clicked, this, &MainWindow::onAddProgramClicked);
-    connect(ui_->deleteProgramButton, &QPushButton::clicked, this, &MainWindow::onRemoveProgramClicked);
-
-    connect(ui_->addTeacherButton, &QPushButton::clicked, this, &MainWindow::onAddTeacherClicked);
-    connect(ui_->deleteTeacherButton, &QPushButton::clicked, this, &MainWindow::onRemoveTeacherClicked);
-
-    connect(ui_->removeTeacherFromProgramButton_2, &QPushButton::clicked, this, &MainWindow::onRemoveTeacherFromProgramClicked2);
-
-
     programModel_->setPrograms(programService_.fetchPrograms());
     teacherModel_->setTeachers(teacherService_.fetchTeachers());
 }
