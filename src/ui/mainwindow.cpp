@@ -27,7 +27,7 @@ MainWindow::MainWindow(School& school,
     , ui_(new Ui::MainWindow)
 {
     ui_->setupUi(this);
-    ui_->titleLabel->setText(school_->name());
+    ui_->titleLabel->setText(school_.name());
 
     programModel_ = new ProgramListModel(this);
     programTeacherModel_ = new ProgramTeacherListModel(this);
@@ -246,7 +246,7 @@ void MainWindow::onAddProgramClicked()
     if (dialog.exec() != QDialog::Accepted)
         return;
 
-    programService_.addProgram(school_->id().toInt(), dialog.program());
+    programService_.addProgram(school_.id().toInt(), dialog.program());
     programModel_->setPrograms(programService_.fetchPrograms());
 }
 
